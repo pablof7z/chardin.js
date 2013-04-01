@@ -44,6 +44,7 @@ body {
 
 .jumbotron {
   margin: 50px 0;
+  margin-bottom: 0px;
   text-align: center;
 }
 .jumbotron h1 {
@@ -83,7 +84,7 @@ body {
 }
 
 .links {
-  padding-top: 20px;
+  padding-bottom: 80px;
   text-align: center;
 }
 
@@ -94,6 +95,6 @@ body {
   margin: 10px;
 }
 
-.chardinjs-helper-layer[data-id="links"] .chardinjs-tooltip:after {
-  left: 10%;
+.chardinjs-helper-layer[data-id="links"] .chardinjs-tooltip:before {
+  left: 90%;
 }
