@@ -1,0 +1,99 @@
+body {
+  background-color: #fff;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), color-stop(25%, #fff), to(#fff));
+  background-image: -webkit-linear-gradient(#eee, #fff 25%, #fff);
+  background-image: -moz-linear-gradient(top, #eee, #fff 25%, #fff);
+  background-image: -ms-linear-gradient(#eee, #fff 25%, #fff);
+  background-image: -o-linear-gradient(#eee, #fff 25%, #fff);
+  background-image: linear-gradient(#eee, #fff 25%, #fff);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.primary.btn {
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+  background-color: #3072b3; /* Old browsers */
+  background-repeat: repeat-x; /* Repeat the gradient */
+  background-image: -moz-linear-gradient(top, #599bdc 0%, #3072b3 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#599bdc), color-stop(100%,#3072b3)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* Chrome 10+,Safari 5.1+ */
+  background-image: -ms-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* IE10+ */
+  background-image: -o-linear-gradient(top, #599bdc 0%,#3072b3 100%); /* Opera 11.10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#599bdc', endColorstr='#3072b3',GradientType=0 ); /* IE6-9 */
+  background-image: linear-gradient(top, #599bdc 0%,#3072b3 100%); /* W3C */
+  border: 1px solid #2967a4;
+  -webkit-transition: none;
+     -moz-transition: none;
+          transition: none;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 2px rgba(0,0,0,.2);
+     -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 2px rgba(0,0,0,.2);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 2px rgba(0,0,0,.2);
+}
+.primary.btn:hover {
+  background-position: 0 -15px;
+}
+.primary.btn:active {
+  background-image: none;
+  background-color: #3072b3; /* Old browsers */
+  -webkit-box-shadow: inset 0 5px 10px rgba(0,0,0,.125), 0 1px 2px rgba(0,0,0,.2);
+     -moz-box-shadow: inset 0 5px 10px rgba(0,0,0,.125), 0 1px 2px rgba(0,0,0,.2);
+          box-shadow: inset 0 5px 10px rgba(0,0,0,.125), 0 1px 2px rgba(0,0,0,.2);
+}
+
+.jumbotron {
+  margin: 50px 0;
+  text-align: center;
+}
+.jumbotron h1 {
+  font-size: 100px;
+  font-family: Montserrat, sans-serif;
+  line-height: 1;
+  display: inline-block;
+  color: #444444;
+}
+
+.jumbotron h1.chardinjs-show-element, .chardinjs-show-element {
+  color: #cccccc;
+}
+
+.chardinjs-show-element a {
+  color: rgba(77, 186, 240, 1);
+}
+
+.jumbotron .lead {
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.jumbotron img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 300px;
+  height: 0px;
+}
+
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+  margin: 20px;
+  margin-bottom: 10px;
+}
+
+.links {
+  padding-top: 20px;
+  text-align: center;
+}
+
+.links p, .credits p { display: inline-block; }
+
+.credits, .license {
+  text-align: center;
+  margin: 10px;
+}
+
+.chardinjs-helper-layer[data-id="links"] .chardinjs-tooltip:after {
+  left: 10%;
+}
