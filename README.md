@@ -4,7 +4,8 @@
 
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements.
 
-![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")
+![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")  
+[Jean-Baptiste-Siméon Chardin](http://en.wikipedia.org/wiki/Jean-Baptiste-Sim%C3%A9on_Chardin)
 
 ## Installing
 
