@@ -2,6 +2,8 @@
 
 **Simple overlay instructions for your apps.**
 
+[Check out a demo](http://heelhook.github.com/chardin.js/)
+
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements.
 
 ![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")  
