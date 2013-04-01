@@ -90,6 +90,47 @@ body {
 
 .links p, .credits p { display: inline-block; }
 
+.links p a.hacker-news {
+  background-color: #f8f8f8;
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#dedede));
+  background-image: -moz-linear-gradient(top,#fff,#dedede);
+  background-image: -o-linear-gradient(top,#fff,#dedede);
+  background-image: -ms-linear-gradient(top,#fff,#dedede);
+  background-image: linear-gradient(top,#fff,#dedede);
+  border: #ccc solid 1px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  font: normal normal normal 11px/18px 'Helvetica Neue',Arial,sans-serif;
+  font-weight: bold;
+  padding: 3px 3px 2px 5px;
+  position: relative;
+  top: -5px;
+}
+
+.links p a.hacker-news i.logo {
+  color: #ff6600;
+  font-size: 1.2em;
+  width: 16px;
+  height: 13px;
+  font-style: normal;
+}
+
+.links p a.hacker-news:hover {
+  text-decoration: none;
+}
+
 .credits, .license {
   text-align: center;
   margin: 10px;
