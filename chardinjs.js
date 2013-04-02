@@ -39,7 +39,6 @@
       chardinJs.prototype.refresh = function() {
         var el, _i, _len, _ref, _results;
         if (this._overlay_visible()) {
-          console.log("ok");
           _ref = this.$el.find('*[data-intro]');
           _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {

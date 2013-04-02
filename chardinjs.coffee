@@ -20,7 +20,6 @@
 
     refresh: ()->
       if @._overlay_visible()
-        console.log "ok"
         @._position_helper_layer(el) for el in @$el.find('*[data-intro]')
       else
         return this
