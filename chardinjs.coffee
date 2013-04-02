@@ -1,7 +1,9 @@
 (($, window) ->
   # Define the plugin class
   class chardinJs
-    constructor: (el) -> @$el = $(el)
+    constructor: (el) ->
+      @$el = $(el)
+      $(window).resize => @.refresh()
 
     start: ->
       return false if @._overlay_visible()
@@ -15,6 +17,13 @@
         @.start()
       else
         @.stop()
+
+    refresh: ()->
+      if @._overlay_visible()
+        console.log "ok"
+        @._position_helper_layer(el) for el in @$el.find('*[data-intro]')
+      else
+        return this
 
     stop: () ->
       @$el.find(".chardinjs-overlay").fadeOut -> @.remove()
@@ -60,7 +69,8 @@
 
     _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
 
-    _place_tooltip: (element, tooltip_layer) ->
+    _place_tooltip: (element) ->
+      tooltip_layer = $(element).data('tooltip_layer')
       tooltip_layer_position = @._get_offset(tooltip_layer)
 
       #reset the old style
@@ -87,20 +97,30 @@
         when "bottom" then tooltip_layer.style.bottom = "-" + (tooltip_layer_position.height) + "px"
         when "top" then tooltip_layer.style.top = "-" + (tooltip_layer_position.height) + "px"
 
+    _position_helper_layer: (element) ->
+      helper_layer = $(element).data('helper_layer')
+      element_position = @._get_offset(element)
+      helper_layer.setAttribute "style", "width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
+
     _show_element: (element) ->
       element_position = @._get_offset(element)
       helper_layer     = document.createElement("div")
       tooltip_layer    = document.createElement("div")
+
+      $(element)
+        .data('helper_layer', helper_layer)
+        .data('tooltip_layer',tooltip_layer)
+
       helper_layer.setAttribute "data-id", element.id if element.id
       helper_layer.className = "chardinjs-helper-layer chardinjs-#{@._get_position(element)}"
-      helper_layer.setAttribute "style", "width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
 
+      @._position_helper_layer element
       @$el.get()[0].appendChild helper_layer
       tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
       tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
       helper_layer.appendChild tooltip_layer
 
-      @._place_tooltip element, tooltip_layer
+      @._place_tooltip element
 
       element.className += " chardinjs-show-element"
 
