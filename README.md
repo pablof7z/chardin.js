@@ -2,7 +2,7 @@
 
 **Simple overlay instructions for your apps.**
 
-[Check out a demo](http://heelhook.github.com/chardin.js/)
+[Check out a demo](http://heelhook.github.com/chardin.js/).
 
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements. It is inspired by
 the recent Gmail new composer tour which I loved.
