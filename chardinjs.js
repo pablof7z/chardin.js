@@ -53,7 +53,7 @@
 
       chardinJs.prototype.stop = function() {
         this.$el.find(".chardinjs-overlay").fadeOut(function() {
-          return this.remove();
+          return $(this).remove();
         });
         this.$el.find('.chardinjs-helper-layer').remove();
         this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
