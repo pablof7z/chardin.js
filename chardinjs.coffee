@@ -105,21 +105,23 @@
       element_position = @._get_offset(element)
       helper_layer     = document.createElement("div")
       tooltip_layer    = document.createElement("div")
+      data_intro        = element.getAttribute('data-intro')        
 
-      $(element)
-        .data('helper_layer', helper_layer)
-        .data('tooltip_layer',tooltip_layer)
+      if data_intro.length > 0
+        $(element)
+          .data('helper_layer', helper_layer)
+          .data('tooltip_layer',tooltip_layer)
 
-      helper_layer.setAttribute "data-id", element.id if element.id
-      helper_layer.className = "chardinjs-helper-layer chardinjs-#{@._get_position(element)}"
+        helper_layer.setAttribute "data-id", element.id if element.id
+        helper_layer.className = "chardinjs-helper-layer chardinjs-#{@._get_position(element)}"
 
-      @._position_helper_layer element
-      @$el.get()[0].appendChild helper_layer
-      tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
-      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
-      helper_layer.appendChild tooltip_layer
+        @._position_helper_layer element
+        @$el.get()[0].appendChild helper_layer
+        tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
+        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
+        helper_layer.appendChild tooltip_layer
 
-      @._place_tooltip element
+        @._place_tooltip element
 
       element.className += " chardinjs-show-element"
 
