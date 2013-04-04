@@ -148,20 +148,23 @@
 
       chardinJs.prototype._show_element = function(element) {
         var current_element_position, element_position, helper_layer, tooltip_layer;
-        element_position = this._get_offset(element);
-        helper_layer = document.createElement("div");
-        tooltip_layer = document.createElement("div");
-        $(element).data('helper_layer', helper_layer).data('tooltip_layer', tooltip_layer);
-        if (element.id) {
-          helper_layer.setAttribute("data-id", element.id);
+        var dataIntro = element.getAttribute('data-intro')        
+        if (dataIntro.length > 0) {        
+          element_position = this._get_offset(element);
+          helper_layer = document.createElement("div");
+          tooltip_layer = document.createElement("div");
+          $(element).data('helper_layer', helper_layer).data('tooltip_layer', tooltip_layer);
+          if (element.id) {
+            helper_layer.setAttribute("data-id", element.id);
+          }
+          helper_layer.className = "chardinjs-helper-layer chardinjs-" + (this._get_position(element));
+          this._position_helper_layer(element);
+          this.$el.get()[0].appendChild(helper_layer);
+          tooltip_layer.className = "chardinjs-tooltip chardinjs-" + (this._get_position(element));
+          tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute('data-intro')) + "</div>";
+          helper_layer.appendChild(tooltip_layer);
+          this._place_tooltip(element);
         }
-        helper_layer.className = "chardinjs-helper-layer chardinjs-" + (this._get_position(element));
-        this._position_helper_layer(element);
-        this.$el.get()[0].appendChild(helper_layer);
-        tooltip_layer.className = "chardinjs-tooltip chardinjs-" + (this._get_position(element));
-        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute('data-intro')) + "</div>";
-        helper_layer.appendChild(tooltip_layer);
-        this._place_tooltip(element);
         element.className += " chardinjs-show-element";
         current_element_position = "";
         if (element.currentStyle) {
