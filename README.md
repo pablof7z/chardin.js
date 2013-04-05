@@ -19,6 +19,10 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
+### Installing in the rails asset pipeline (optional) 
+
+There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
+
 ### Building (optional)
 
 If you choose to fork the repo you can build the assets running
