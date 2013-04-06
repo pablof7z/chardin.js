@@ -60,6 +60,7 @@
         });
         this.$el.find('.chardinjs-helper-layer').remove();
         this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
+        this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
         if (window.removeEventListener) {
           window.removeEventListener("keydown", this._onKeyDown, true);
         } else {
