@@ -25,11 +25,12 @@
         return this
 
     stop: () ->
-      @$el.find(".chardinjs-overlay").fadeOut -> @.remove()
+      @$el.find(".chardinjs-overlay").fadeOut -> $(@).remove()
 
       @$el.find('.chardinjs-helper-layer').remove()
 
       @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
+      @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
 
       if window.removeEventListener
         window.removeEventListener "keydown", @_onKeyDown, true
@@ -53,7 +54,7 @@
         styleText += "top: 0;bottom: 0; left: 0;right: 0;position: fixed;"
         overlay_layer.setAttribute "style", styleText
       else
-        element_position = @._get_offset()
+        element_position = @._get_offset(@$el.get()[0])
         if element_position
           styleText += "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px;left: " + element_position.left + "px;"
           overlay_layer.setAttribute "style", styleText
