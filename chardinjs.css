@@ -3,6 +3,7 @@
   z-index: 999999;
   background-color: #000;
   opacity: 0;
+  position: absolute;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -13,6 +14,7 @@
   position: absolute;
   z-index: 9999998;
   color: white;
+  position: absolute;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -32,6 +34,7 @@
     padding-top: 10px; }
 
 .chardinjs-tooltip {
+  position: absolute;
   position: absolute;
   -webkit-transition: opacity 0.1s ease-out;
   -moz-transition: opacity 0.1s ease-out;
