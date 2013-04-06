@@ -84,14 +84,21 @@ Triggered when chardinJs is stopped.
 
 [Pablo Fernandez][2]
 
+### Contributors
+
+ * [John Weir](https://github.com/jweir)
+ * [felipeclopes](https://github.com/felipeclopes)
+ * [Bobby Jack](https://github.com/fiveminuteargument)
+ * [Maxim Syabro](https://github.com/syabro)
+
 ## Contributions
 
 If you want to contribute, please:
 
   * Fork the project.
   * Make your feature addition or bug fix.
+  * Add yourself to the list of contributors in the README.md.
   * Send me a pull request on Github.
-
 
 ## License
 
