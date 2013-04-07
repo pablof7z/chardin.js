@@ -1,5 +1,4 @@
 @mixin transition($property) {
-  position: absolute;
   -webkit-transition: $property;
      -moz-transition: $property;
       -ms-transition: $property;
