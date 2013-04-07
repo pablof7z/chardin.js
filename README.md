@@ -90,6 +90,8 @@ Triggered when chardinJs is stopped.
  * [felipeclopes](https://github.com/felipeclopes)
  * [Bobby Jack](https://github.com/fiveminuteargument)
  * [Maxim Syabro](https://github.com/syabro)
+ * [nmeum](https://github.com/nmeum)
+ * [Jakob Miland](https://github.com/saebekassebil)
 
 ## Contributions
 
