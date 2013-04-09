@@ -9,6 +9,7 @@
       return false if @._overlay_visible()
       @._add_overlay_layer()
       @._show_element(el) for el in @$el.find('*[data-intro]')
+      @$el.addClass('chardinated')
 
       @$el.trigger 'chardinJs:start'
 
@@ -36,6 +37,8 @@
         window.removeEventListener "keydown", @_onKeyDown, true
       #IE
       else document.detachEvent "onkeydown", @_onKeyDown  if document.detachEvent
+
+      @$el.removeClass('chardinated')
 
       @$el.trigger 'chardinJs:stop'
 
@@ -67,7 +70,7 @@
         overlay_layer.setAttribute "style", styleText
       , 10
 
-    _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
+    _get_position: (element) -> element.getAttribute('data-intro-position') or element.getAttribute('data-position') or 'bottom'
 
     _place_tooltip: (element) ->
       tooltip_layer = $(element).data('tooltip_layer')
