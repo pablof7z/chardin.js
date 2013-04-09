@@ -7,7 +7,7 @@
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements. It is inspired by
 the recent Gmail new composer tour which I loved.
 
-![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")  
+![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")
 [Jean-Baptiste-Siméon Chardin](http://en.wikipedia.org/wiki/Jean-Baptiste-Sim%C3%A9on_Chardin)
 
 ## Installing
@@ -19,7 +19,7 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
-### Installing in the rails asset pipeline (optional) 
+### Installing in the rails asset pipeline (optional)
 
 There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
 
@@ -34,8 +34,8 @@ If you choose to fork the repo you can build the assets running
 
 Add the instructions to your elements:
 
-`data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+`data-intro`: Text to show with the instructions
+`data(-intro)-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
@@ -92,6 +92,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [Jakob Miland](https://github.com/saebekassebil)
+ * [caleon](https://github.com/caleon)
 
 ## Contributions
 

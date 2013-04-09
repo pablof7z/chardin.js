@@ -74,6 +74,17 @@
   .chardinjs-tooltip.chardinjs-left:after {
     right: -100px; }
 
+.chardinated [class*="-fixed"] {
+  z-index: auto;
+  position: absolute; }
+
+.chardinjs-tooltiptext {
+  text-align: center; }
+  .chardinjs-left .chardinjs-tooltiptext {
+    text-align: right; }
+  .chardinjs-right .chardinjs-tooltiptext {
+    text-align: left; }
+
 .chardinjs-show-element {
   z-index: 9999999;
   opacity: 0.8; }
