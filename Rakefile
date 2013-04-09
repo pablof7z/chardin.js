@@ -6,8 +6,10 @@ require 'uglifier'
 
 desc "Compile"
 task :compile do
+  require 'coffee-script'
   Dir.glob("**/*.coffee").each do |file|
-    system("bundle exec coffee -c #{file}")
+    js_name = file.sub(/\.coffee$/, '.js')
+    File.open(js_name, 'w') { |f| f.write CoffeeScript.compile(File.read(file)) }
   end
 
   Dir.glob("**/*.scss").each do |file|
