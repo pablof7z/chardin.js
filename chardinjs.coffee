@@ -1,4 +1,4 @@
-(($, window) ->
+do ($ = window.jQuery, window) ->
   # Define the plugin class
   class chardinJs
     constructor: (el) ->
@@ -158,4 +158,3 @@
     if typeof option == 'string'
       data[option].apply(data, args)
     data
-) window.jQuery, window
