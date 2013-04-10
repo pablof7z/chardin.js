@@ -92,6 +92,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [Jakob Miland](https://github.com/saebekassebil)
+ * [printercu](https://github.com/printercu)
 
 ## Contributions
 
