@@ -1,14 +1,15 @@
 do ($ = window.jQuery, window) ->
   # Define the plugin class
   class chardinJs
-    constructor: (el) ->
+    constructor: (el, namespace) ->
       @$el = $(el)
+      @namespace = namespace
       $(window).resize => @.refresh()
 
     start: ->
       return false if @._overlay_visible()
       @._add_overlay_layer()
-      @._show_element(el) for el in @$el.find('*[data-intro]')
+      @._show_element(el) for el in @._get_elements()
 
       @$el.trigger 'chardinJs:start'
 
@@ -20,7 +21,7 @@ do ($ = window.jQuery, window) ->
 
     refresh: ()->
       if @._overlay_visible()
-        @._position_helper_layer(el) for el in @$el.find('*[data-intro]')
+        @._position_helper_layer(el) for el in @._get_elements()
       else
         return this
 
@@ -67,7 +68,7 @@ do ($ = window.jQuery, window) ->
         overlay_layer.setAttribute "style", styleText
       , 10
 
-    _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
+    _get_position: (element) -> element.getAttribute(@._get_data_attribute 'position') or 'bottom'
 
     _place_tooltip: (element) ->
       tooltip_layer = $(element).data('tooltip_layer')
@@ -79,7 +80,9 @@ do ($ = window.jQuery, window) ->
       tooltip_layer.style.bottom = null
       tooltip_layer.style.left = null
 
-      switch @._get_position(element)
+      tooltip_position = @._get_position element
+
+      switch tooltip_position
         when "top", "bottom"
           target_element_position  = @._get_offset(element)
           target_width             = target_element_position.width
@@ -91,7 +94,7 @@ do ($ = window.jQuery, window) ->
           my_height               = $(tooltip_layer).height()
           tooltip_layer.style.top = "#{(target_height/2)-(tooltip_layer_position.height/2)}px"
 
-      switch @._get_position(element)
+      switch tooltip_position
         when "left" then tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px"
         when "right" then tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px"
         when "bottom" then tooltip_layer.style.bottom = "-" + (tooltip_layer_position.height) + "px"
@@ -106,18 +109,21 @@ do ($ = window.jQuery, window) ->
       element_position = @._get_offset(element)
       helper_layer     = document.createElement("div")
       tooltip_layer    = document.createElement("div")
+      tooltip_position = @._get_position element
 
       $(element)
         .data('helper_layer', helper_layer)
         .data('tooltip_layer',tooltip_layer)
 
       helper_layer.setAttribute "data-id", element.id if element.id
-      helper_layer.className = "chardinjs-helper-layer chardinjs-#{@._get_position(element)}"
+      helper_layer.className = "chardinjs-helper-layer chardinjs-#{tooltip_position}"
 
       @._position_helper_layer element
       @$el.get()[0].appendChild helper_layer
-      tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
-      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
+
+      tooltip_text = element.getAttribute(@._get_data_attribute 'intro')
+      tooltip_layer.className = "chardinjs-tooltip chardinjs-#{tooltip_position}"
+      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{tooltip_text}</div>"
       helper_layer.appendChild tooltip_layer
 
       @._place_tooltip element
@@ -150,11 +156,25 @@ do ($ = window.jQuery, window) ->
       element_position.left = _x
       element_position
 
-  $.fn.extend chardinJs: (option, args...) ->
+    _get_elements: () ->
+      @$el.find("*[#{@._get_data_attribute 'intro'}]")
+
+    _get_data_attribute: (attribute) ->
+      data_attribute = 'data-'
+      data_attribute += "#{@namespace}-" if @namespace isnt ''
+      data_attribute += attribute
+
+  $.fn.extend chardinJs: (option, namespace, args...) ->
     $this = $(this[0])
     data = $this.data('chardinJs')
+
+    if typeof namespace isnt 'string'
+      namespace = 'chardinjs'
     if !data
-      $this.data 'chardinJs', (data = new chardinJs(this, option))
+      $this.data 'chardinJs', (data = new chardinJs(this, namespace))
+    else
+      data.namespace = namespace
+
     if typeof option == 'string'
       data[option].apply(data, args)
     data

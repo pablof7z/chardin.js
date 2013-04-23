@@ -34,11 +34,11 @@ If you choose to fork the repo you can build the assets running
 
 Add the instructions to your elements:
 
-`data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+`data-chardinjs-intro`: Text to show with the instructions  
+`data-chardinjs-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
 
 ```HTML
-<img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
+<img src="img/chardin.png" data-chardinjs-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-chardinjs-position="right" />
 ```
 
 ## Running
@@ -56,13 +56,21 @@ change `body` to some other selector.
 $('.container').chardinJs('start')
 ```
 
+The function also accepts an optional second namespace parameter to use in place of "chardinjs". For instance,
+
+```Javascript
+$('body').chardinJs('start', 'namespace')
+```
+
+would target the "data-namespace-intro" and "data-namespace-position" attributes. Pass in an empty string ("") to use "data-intro" and "data-position".
+
 ## Methods
 
-### .chardinJs('start')
+### .chardinJs('start', [namespace])
 
 Start ChardinJs in the selector.
 
-### .chardinJs('toggle')
+### .chardinJs('toggle', [namespace])
 
 Toggle ChardinJs.
 
@@ -93,6 +101,7 @@ Triggered when chardinJs is stopped.
  * [nmeum](https://github.com/nmeum)
  * [Jakob Miland](https://github.com/saebekassebil)
  * [printercu](https://github.com/printercu)
+ * [Mike Chen](https://github.com/mhchen)
 
 ## Contributions
 
