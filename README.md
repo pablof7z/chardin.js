@@ -34,11 +34,11 @@ If you choose to fork the repo you can build the assets running
 
 Add the instructions to your elements:
 
-`data-chardinjs-intro`: Text to show with the instructions  
+`data-chardinjs-text`: Text to show with the instructions  
 `data-chardinjs-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
 
 ```HTML
-<img src="img/chardin.png" data-chardinjs-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-chardinjs-position="right" />
+<img src="img/chardin.png" data-chardinjs-text="An awesome 18th-century painter, who found beauty in everyday, common things." data-chardinjs-position="right" />
 ```
 
 ## Running
@@ -62,7 +62,7 @@ The function also accepts an optional second namespace parameter to use in place
 $('body').chardinJs('start', 'namespace')
 ```
 
-would target the "data-namespace-intro" and "data-namespace-position" attributes. Pass in an empty string ("") to use "data-intro" and "data-position".
+would target the "data-namespace-text" and "data-namespace-position" attributes. Pass in an empty string ("") to use "data-text" and "data-position".
 
 ## Methods
 

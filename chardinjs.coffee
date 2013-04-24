@@ -121,7 +121,7 @@ do ($ = window.jQuery, window) ->
       @._position_helper_layer element
       @$el.get()[0].appendChild helper_layer
 
-      tooltip_text = element.getAttribute(@._get_data_attribute 'intro')
+      tooltip_text = element.getAttribute(@._get_data_attribute 'text')
       tooltip_layer.className = "chardinjs-tooltip chardinjs-#{tooltip_position}"
       tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{tooltip_text}</div>"
       helper_layer.appendChild tooltip_layer
@@ -157,7 +157,7 @@ do ($ = window.jQuery, window) ->
       element_position
 
     _get_elements: () ->
-      @$el.find("*[#{@._get_data_attribute 'intro'}]")
+      @$el.find("*[#{@._get_data_attribute 'text'}]")
 
     _get_data_attribute: (attribute) ->
       data_attribute = 'data-'
