@@ -16,6 +16,8 @@ task :compile do
   end
 
   File.open('chardinjs.min.js', 'w') { |f| f.write Uglifier.compile(File.read('chardinjs.js')) }
+
+  system("make clean && make")
 end
 
 desc "Watch"

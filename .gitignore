@@ -1,2 +1,4 @@
 .sass-cache
 .DS_Store
+components
+build
