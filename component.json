@@ -1,0 +1,22 @@
+{
+	"name": "chardinjs",
+	"description": "Simple overlay instructions for your apps.",
+	"keywords": [
+		"jquery",
+		"chardin",
+		"tour"
+	],
+	"repo": "indabaui/chardin.js",
+	"version": "1",
+	"main": "chardinjs.js",
+	"dependencies": {
+		"component/jquery": "*"
+	},
+	"scripts": [
+		"chardinjs.js"
+	],
+  "styles": [
+    "chardinjs.css"
+  ], 
+	"license": "MIT"
+}
