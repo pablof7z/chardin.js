@@ -67,9 +67,7 @@
           if (document.detachEvent) {
             try {
               document.detachEvent("onkeydown", this._onKeyDown);
-            } catch (e) {
-              this._onKeyDown = function() { /* No Op */ };
-            }
+            } catch (e) {}
           }
         }
         return this.$el.trigger('chardinJs:stop');
