@@ -65,7 +65,11 @@
           window.removeEventListener("keydown", this._onKeyDown, true);
         } else {
           if (document.detachEvent) {
-            document.detachEvent("onkeydown", this._onKeyDown);
+            try {
+              document.detachEvent("onkeydown", this._onKeyDown);
+            } catch (e) {
+              this._onKeyDown = function() { /* No Op */ };
+            }
           }
         }
         return this.$el.trigger('chardinJs:stop');
