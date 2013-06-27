@@ -1,7 +1,13 @@
 do ($ = window.jQuery, window) ->
   # Define the plugin class
   class chardinJs
-    constructor: (el) ->
+
+    settings:
+      opacity: 0.8
+      disableZIndex: false
+
+    constructor: (el, options) ->
+      @settings = $.extend(@settings, options)
       @$el = $(el)
       $(window).resize => @.refresh()
 
@@ -62,8 +68,8 @@ do ($ = window.jQuery, window) ->
 
       overlay_layer.onclick = => @.stop()
 
-      setTimeout ->
-        styleText += "opacity: .8;opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);"
+      setTimeout =>
+        styleText += "opacity: #{@settings.opacity};opacity: #{@settings.opacity};-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=#{Math.round(100 * @settings.opacity)})';filter: alpha(opacity=#{Math.round(100 * @settings.opacity)});"
         overlay_layer.setAttribute "style", styleText
       , 10
 
@@ -122,7 +128,7 @@ do ($ = window.jQuery, window) ->
 
       @._place_tooltip element
 
-      element.className += " chardinjs-show-element"
+      element.className += " chardinjs-show-element" unless @settings.disableZIndex
 
       current_element_position = ""
       if element.currentStyle #IE
@@ -150,11 +156,11 @@ do ($ = window.jQuery, window) ->
       element_position.left = _x
       element_position
 
-  $.fn.extend chardinJs: (option, args...) ->
+  $.fn.extend chardinJs: (command, options={}) ->
     $this = $(this[0])
     data = $this.data('chardinJs')
     if !data
-      $this.data 'chardinJs', (data = new chardinJs(this, option))
-    if typeof option == 'string'
-      data[option].apply(data, args)
+      $this.data 'chardinJs', (data = new chardinJs(this, options))
+    if typeof command == 'string'
+      data[command].apply(data)
     data
