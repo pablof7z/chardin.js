@@ -25,7 +25,9 @@
         _ref = this.$el.find('*[data-intro]');
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           el = _ref[_i];
-          this._show_element(el);
+          if (!$(el).is(':hidden')) {
+            this._show_element(el);
+          }
         }
         return this.$el.trigger('chardinJs:start');
       };
