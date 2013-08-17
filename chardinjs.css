@@ -42,14 +42,38 @@
   .chardinjs-tooltip.chardinjs-left {
     margin-left: -135px;
     padding-right: 10px; }
+  .chardinjs-tooltip.chardinjs-left.chardinjs-long {
+    margin-left: -235px;
+    padding-right: 10px; }
+  .chardinjs-tooltip.chardinjs-left.chardinjs-short {
+    margin-left: -85px;
+    padding-right: 10px; }
   .chardinjs-tooltip.chardinjs-right {
     margin-right: -135px;
+    padding-left: 10px; }
+  .chardinjs-tooltip.chardinjs-right.chardinjs-long {
+    margin-right: -235px;
+    padding-left: 10px; }
+  .chardinjs-tooltip.chardinjs-right.chardinjs-short {
+    margin-right: -85px;
     padding-left: 10px; }
   .chardinjs-tooltip.chardinjs-bottom {
     margin-bottom: -50px;
     padding-top: 10px; }
+  .chardinjs-tooltip.chardinjs-bottom.chardinjs-long {
+    margin-bottom: -150px;
+    padding-top: 10px; }
+  .chardinjs-tooltip.chardinjs-bottom.chardinjs-short {
+    margin-bottom: -25px;
+    padding-top: 10px; }
   .chardinjs-tooltip.chardinjs-top {
     margin-top: -50px;
+    padding-bottom: 10px; }
+  .chardinjs-tooltip.chardinjs-top.chardinjs-long {
+    margin-top: -150px;
+    padding-bottom: 10px; }
+  .chardinjs-tooltip.chardinjs-top.chardinjs-short {
+    margin-top: -25px;
     padding-bottom: 10px; }
   .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after, .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
     content: ".";
@@ -61,18 +85,48 @@
   .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after {
     width: 100px;
     top: 50%; }
+  .chardinjs-tooltip.chardinjs-right.chardinjs-long:before, .chardinjs-tooltip.chardinjs-left.chardinjs-long:after {
+    width: 200px;
+    top: 50%; }
+  .chardinjs-tooltip.chardinjs-right.chardinjs-short:before, .chardinjs-tooltip.chardinjs-left.chardinjs-short:after {
+    width: 50px;
+    top: 50%; }
   .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
     width: 1px;
     height: 50px;
     left: 50%; }
+  .chardinjs-tooltip.chardinjs-bottom.chardinjs-long:before, .chardinjs-tooltip.chardinjs-top.chardinjs-long:after {
+    width: 1px;
+    height: 150px;
+    left: 50%; }
+  .chardinjs-tooltip.chardinjs-bottom.chardinjs-short:before, .chardinjs-tooltip.chardinjs-top.chardinjs-short:after {
+    width: 1px;
+    height: 25px;
+    left: 50%; }
   .chardinjs-tooltip.chardinjs-bottom:before {
     top: -50px; }
+  .chardinjs-tooltip.chardinjs-bottom.chardinjs-long:before {
+    top: -150px; }
+  .chardinjs-tooltip.chardinjs-bottom.chardinjs-short:before {
+    top: -25px; }
   .chardinjs-tooltip.chardinjs-top:after {
     bottom: -50px; }
+  .chardinjs-tooltip.chardinjs-top.chardinjs-long:after {
+    bottom: -150px; }
+  .chardinjs-tooltip.chardinjs-top.chardinjs-short:after {
+    bottom: -25px; }
   .chardinjs-tooltip.chardinjs-right:before {
     left: -100px; }
+  .chardinjs-tooltip.chardinjs-right.chardinjs-long:before {
+    left: -200px; }
+  .chardinjs-tooltip.chardinjs-right.chardinjs-short:before {
+    left: -50px; }
   .chardinjs-tooltip.chardinjs-left:after {
     right: -100px; }
+  .chardinjs-tooltip.chardinjs-left.chardinjs-long:after {
+    right: -200px; }
+  .chardinjs-tooltip.chardinjs-left.chardinjs-short:after {
+    right: -50px; }
 
 .chardinjs-show-element {
   z-index: 9999999;
