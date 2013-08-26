@@ -2,10 +2,12 @@
 
 **Simple overlay instructions for your apps.**
 
-[Check out a demo](http://heelhook.github.com/chardin.js/).
+[Check out a demo](http://yudao.github.com/chardin.js/).
 
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements. It is inspired by
 the recent Gmail new composer tour which I loved.
+
+You can display instructions in a sequenced manner with automatic delay or by a simple click.
 
 ![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")  
 [Jean-Baptiste-Siméon Chardin](http://en.wikipedia.org/wiki/Jean-Baptiste-Sim%C3%A9on_Chardin)
@@ -32,10 +34,17 @@ If you choose to fork the repo you can build the assets running
 
 ## Adding data for the instructions
 
+Add the instructions to your container for sequenced mode:
+
+`data-sequenced`: True to run the sequenced mode
+`data-auto`: True if you want to pass to each instructions automatically
+`data-delay`: Number of milliseconds for the delay of the auto mode
+
 Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
 `data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+`data-sequence`: Number to sort ascending the instruction (only for sequenced mode)
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
@@ -55,6 +64,9 @@ change `body` to some other selector.
 ```Javascript
 $('.container').chardinJs('start')
 ```
+
+In sequence mode, you can click to the right of the screen to pass to the next instruction and to the left of the screen to pass to the previous instruction.
+
 
 ## Methods
 
@@ -100,7 +112,7 @@ Triggered when chardinJs pass to the previous helper. (Only in sequenced mode).
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
- * [Mickaël Gentil](https://github.com/yoyoma)
+ * [Mickaël Gentil](https://github.com/yudao)
 
 ## Contributions
 
