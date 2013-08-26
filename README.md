@@ -80,6 +80,14 @@ Triggered when chardinJs is correctly started.
 
 Triggered when chardinJs is stopped.
 
+### 'chardinJs:next'
+
+Triggered when chardinJs pass to the next helper. (Only in sequenced mode).
+
+### 'chardinJs:previous'
+
+Triggered when chardinJs pass to the previous helper. (Only in sequenced mode).
+
 ## Author
 
 [Pablo Fernandez][2]
@@ -92,6 +100,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
+ * [Mickaël Gentil](https://github.com/yoyoma)
 
 ## Contributions
 

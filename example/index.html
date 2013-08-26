@@ -17,19 +17,19 @@
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="../chardinjs.min.js"></script>
+    <script src="../chardinjs.js"></script>
     <script src="js/demo.js"></script>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
   </head>
 
-  <body>
+  <body data-sequenced="true" data-auto="true" data-delay="800">
     <div class="container">
       <div class="jumbotron">
         <h1 data-intro="Project title" data-position="right">Chardin.js</h1>
         <p class="lead">
           Simple overlay instructions for your apps.
         </p>
-        <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
+        <img src="img/chardin.png" alt="An awesome 18th-century painter" title="An awesome 18th-century painter" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" data-sequence="1"/>
         <a href="#" class="btn btn-large primary" data-toggle="chardinjs" data-intro="This button toggles the overlay, you can click it, even when the overlay is visible" data-position="left">See it in action</a>
         <a href="" id="opentour" class="hide" data-toggle="chardinjs">Or open it again</a>
         <div class="credits">
@@ -47,7 +47,7 @@
           <p id="links" data-intro="Links to Github, Twitter, etc." data-position="top">
             <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="Check out Chardin.js, simple overlay instructions for apps, https://heelhook.github.com/chardin.js" data-count="none" data-via="pablo2dot0">Tweet</a>
             <a href="https://twitter.com/pablo2dot0" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @pablo2dot0</a>
-            <iframe style="display: inline-block;" frameborder="no" scrolling="no" height="30px" width="70px" src="http://hnlike.com/upvote.php?link=http%3A%2F%2Fheelhook.github.com&title=Chardin">iframes not supported by your browser</iframe>
+            <iframe style="display: inline-block;border:0;overflow:hidden;" height="30" width="70" src="http://hnlike.com/upvote.php?link=http%3A%2F%2Fheelhook.github.com&amp;title=Chardin">iframes not supported by your browser</iframe>
           </p>
         </div>
 
