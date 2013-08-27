@@ -52,6 +52,40 @@ do ($ = window.jQuery, window) ->
       @sequenceIdx = 0
       @$el.trigger 'chardinJs:stop'
 
+    next: (delayed) ->
+      clearTimeout(@timeOut)
+      delayed = if delayed != false then true else false
+      @sequenceIdx++
+      idx = @sequenceIdx
+      el = @sequencedItems[@sequenceIdx]
+      if delayed
+        @timeOut = setTimeout (=>
+          @_remove_sequenced_element(0)
+          @_show_sequenced_element(true)
+          @$el.trigger 'chardinJs:next', [idx, el]
+        ), @delayTime
+      else
+        @_remove_sequenced_element(0)
+        @_show_sequenced_element(false)
+        @$el.trigger 'chardinJs:next', [idx, el]
+
+    previous: (delayed) ->
+      clearTimeout(@timeOut)
+      delayed = if delayed != false then true else false
+      @sequenceIdx--
+      idx = @sequenceIdx
+      el = @sequencedItems[@sequenceIdx]
+      if delayed
+        @timeOut = setTimeout (=>
+          @_remove_sequenced_element(0)
+          @_show_sequenced_element(true)
+          @$el.trigger 'chardinJs:previous', [idx, el]
+        ), @delayTime
+      else
+        @_remove_sequenced_element(0)
+        @_show_sequenced_element(false)
+        @$el.trigger 'chardinJs:previous', [idx, el]
+
     _overlay_visible: ->
       @$el.find('.chardinjs-overlay').length != 0
 
@@ -161,47 +195,17 @@ do ($ = window.jQuery, window) ->
       if @sequenceIdx < @sequencedItems.length - 1
         if @isAuto
           @timeOut = setTimeout (=>
-            @_next(@isAuto)), @delayTime
+            @next(@isAuto)), @delayTime
       else
         if @isAuto
           @timeOut = setTimeout (=>
             @stop()), @delayTime
 
-    _next: (delayed) ->
-      clearTimeout(@timeOut)
-      delayed = if delayed != false then true else false
-      @sequenceIdx++
-      if delayed
-        @timeOut = setTimeout (=>
-          @_remove_sequenced_element(0)
-          @_show_sequenced_element(true)
-          @$el.trigger 'chardinJs:next'
-        ), @delayTime
-      else
-        @_remove_sequenced_element(0)
-        @_show_sequenced_element(false)
-        @$el.trigger 'chardinJs:next'
-
-    _previous: (delayed) ->
-      clearTimeout(@timeOut)
-      delayed = if delayed != false then true else false
-      @sequenceIdx--
-      if delayed
-        @timeOut = setTimeout (=>
-          @_remove_sequenced_element(0)
-          @_show_sequenced_element(true)
-          @$el.trigger 'chardinJs:previous'
-        ), @delayTime
-      else
-        @_remove_sequenced_element(0)
-        @_show_sequenced_element(false)
-        @$el.trigger 'chardinJs:previous'
-
     _handleMouseClick: (event) ->
       size = @_getMaxSize()
       event = event || window.event
-      @_next(false) if event.clientX >= (size.width / 2)
-      @_previous(false) if event.clientX <= (size.width / 2)
+      @next(false) if event.clientX >= (size.width / 2)
+      @previous(false) if event.clientX <= (size.width / 2)
 
     _getMaxSize: ()->
       body = document.body

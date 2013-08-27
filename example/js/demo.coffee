@@ -13,3 +13,11 @@ $ ->
     $('a.btn.primary').off('click').text('See more on Github')
       .attr('href', 'https://github.com/heelhook/chardin.js')
     $('a#opentour').css display: 'block'
+
+  $('body').on 'chardinJs:next', (event, index, element)->
+    console.log index
+    console.log element
+
+  $('body').on 'chardinJs:previous', (event, index, element)->
+    console.log index
+    console.log element

@@ -82,6 +82,14 @@ Toggle ChardinJs.
 
 Make your best guess. That's right! Stops ChardinJs in the selector.
 
+### .chardinJs('next')
+
+Go to the next instruction (only in sequenced mode)
+
+### .chardinJs('previous')
+
+Return to the previous instruction (only in sequenced mode)
+
 ## Events
 
 ### 'chardinJs:start'

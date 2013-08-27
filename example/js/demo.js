@@ -14,11 +14,19 @@
         });
       }
     });
-    return $('body').on('chardinJs:stop', function() {
+    $('body').on('chardinJs:stop', function() {
       $('a.btn.primary').off('click').text('See more on Github').attr('href', 'https://github.com/heelhook/chardin.js');
       return $('a#opentour').css({
         display: 'block'
       });
+    });
+    $('body').on('chardinJs:next', function(event, index, element) {
+      console.log(index);
+      return console.log(element);
+    });
+    return $('body').on('chardinJs:previous', function(event, index, element) {
+      console.log(index);
+      return console.log(element);
     });
   });
 

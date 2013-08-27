@@ -78,6 +78,48 @@
         return this.$el.trigger('chardinJs:stop');
       };
 
+      chardinJs.prototype.next = function(delayed) {
+        var el, idx,
+          _this = this;
+        clearTimeout(this.timeOut);
+        delayed = delayed !== false ? true : false;
+        this.sequenceIdx++;
+        idx = this.sequenceIdx;
+        el = this.sequencedItems[this.sequenceIdx];
+        if (delayed) {
+          return this.timeOut = setTimeout((function() {
+            _this._remove_sequenced_element(0);
+            _this._show_sequenced_element(true);
+            return _this.$el.trigger('chardinJs:next', [idx, el]);
+          }), this.delayTime);
+        } else {
+          this._remove_sequenced_element(0);
+          this._show_sequenced_element(false);
+          return this.$el.trigger('chardinJs:next', [idx, el]);
+        }
+      };
+
+      chardinJs.prototype.previous = function(delayed) {
+        var el, idx,
+          _this = this;
+        clearTimeout(this.timeOut);
+        delayed = delayed !== false ? true : false;
+        this.sequenceIdx--;
+        idx = this.sequenceIdx;
+        el = this.sequencedItems[this.sequenceIdx];
+        if (delayed) {
+          return this.timeOut = setTimeout((function() {
+            _this._remove_sequenced_element(0);
+            _this._show_sequenced_element(true);
+            return _this.$el.trigger('chardinJs:previous', [idx, el]);
+          }), this.delayTime);
+        } else {
+          this._remove_sequenced_element(0);
+          this._show_sequenced_element(false);
+          return this.$el.trigger('chardinJs:previous', [idx, el]);
+        }
+      };
+
       chardinJs.prototype._overlay_visible = function() {
         return this.$el.find('.chardinjs-overlay').length !== 0;
       };
@@ -209,7 +251,7 @@
         if (this.sequenceIdx < this.sequencedItems.length - 1) {
           if (this.isAuto) {
             return this.timeOut = setTimeout((function() {
-              return _this._next(_this.isAuto);
+              return _this.next(_this.isAuto);
             }), this.delayTime);
           }
         } else {
@@ -221,51 +263,15 @@
         }
       };
 
-      chardinJs.prototype._next = function(delayed) {
-        var _this = this;
-        clearTimeout(this.timeOut);
-        delayed = delayed !== false ? true : false;
-        this.sequenceIdx++;
-        if (delayed) {
-          return this.timeOut = setTimeout((function() {
-            _this._remove_sequenced_element(0);
-            _this._show_sequenced_element(true);
-            return _this.$el.trigger('chardinJs:next');
-          }), this.delayTime);
-        } else {
-          this._remove_sequenced_element(0);
-          this._show_sequenced_element(false);
-          return this.$el.trigger('chardinJs:next');
-        }
-      };
-
-      chardinJs.prototype._previous = function(delayed) {
-        var _this = this;
-        clearTimeout(this.timeOut);
-        delayed = delayed !== false ? true : false;
-        this.sequenceIdx--;
-        if (delayed) {
-          return this.timeOut = setTimeout((function() {
-            _this._remove_sequenced_element(0);
-            _this._show_sequenced_element(true);
-            return _this.$el.trigger('chardinJs:previous');
-          }), this.delayTime);
-        } else {
-          this._remove_sequenced_element(0);
-          this._show_sequenced_element(false);
-          return this.$el.trigger('chardinJs:previous');
-        }
-      };
-
       chardinJs.prototype._handleMouseClick = function(event) {
         var size;
         size = this._getMaxSize();
         event = event || window.event;
         if (event.clientX >= (size.width / 2)) {
-          this._next(false);
+          this.next(false);
         }
         if (event.clientX <= (size.width / 2)) {
-          return this._previous(false);
+          return this.previous(false);
         }
       };
 
