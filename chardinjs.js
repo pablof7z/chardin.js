@@ -79,23 +79,21 @@
       };
 
       chardinJs.prototype.next = function(delayed) {
-        var el, idx,
-          _this = this;
+        var _this = this;
         clearTimeout(this.timeOut);
         delayed = delayed !== false ? true : false;
-        this.sequenceIdx++;
-        idx = this.sequenceIdx;
-        el = this.sequencedItems[this.sequenceIdx];
         if (delayed) {
           return this.timeOut = setTimeout((function() {
+            _this.sequenceIdx++;
             _this._remove_sequenced_element(0);
             _this._show_sequenced_element(true);
-            return _this.$el.trigger('chardinJs:next', [idx, el]);
+            return _this.$el.trigger('chardinJs:next', [_this.sequenceIdx, _this.sequencedItems[_this.sequenceIdx]]);
           }), this.delayTime);
         } else {
+          this.sequenceIdx++;
           this._remove_sequenced_element(0);
           this._show_sequenced_element(false);
-          return this.$el.trigger('chardinJs:next', [idx, el]);
+          return this.$el.trigger('chardinJs:next', [this.sequenceIdx, this.sequencedItems[this.sequenceIdx]]);
         }
       };
 
@@ -104,19 +102,20 @@
           _this = this;
         clearTimeout(this.timeOut);
         delayed = delayed !== false ? true : false;
-        this.sequenceIdx--;
         idx = this.sequenceIdx;
         el = this.sequencedItems[this.sequenceIdx];
         if (delayed) {
           return this.timeOut = setTimeout((function() {
+            _this.sequenceIdx--;
             _this._remove_sequenced_element(0);
             _this._show_sequenced_element(true);
-            return _this.$el.trigger('chardinJs:previous', [idx, el]);
+            return _this.$el.trigger('chardinJs:previous', [_this.sequenceIdx, _this.sequencedItems[_this.sequenceIdx]]);
           }), this.delayTime);
         } else {
+          this.sequenceIdx--;
           this._remove_sequenced_element(0);
           this._show_sequenced_element(false);
-          return this.$el.trigger('chardinJs:previous', [idx, el]);
+          return this.$el.trigger('chardinJs:previous', [this.sequenceIdx, this.sequencedItems[this.sequenceIdx]]);
         }
       };
 

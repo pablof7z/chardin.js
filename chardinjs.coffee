@@ -55,36 +55,36 @@ do ($ = window.jQuery, window) ->
     next: (delayed) ->
       clearTimeout(@timeOut)
       delayed = if delayed != false then true else false
-      @sequenceIdx++
-      idx = @sequenceIdx
-      el = @sequencedItems[@sequenceIdx]
       if delayed
         @timeOut = setTimeout (=>
+          @sequenceIdx++
           @_remove_sequenced_element(0)
           @_show_sequenced_element(true)
-          @$el.trigger 'chardinJs:next', [idx, el]
+          @$el.trigger 'chardinJs:next', [@sequenceIdx, @sequencedItems[@sequenceIdx]]
         ), @delayTime
       else
+        @sequenceIdx++
         @_remove_sequenced_element(0)
         @_show_sequenced_element(false)
-        @$el.trigger 'chardinJs:next', [idx, el]
+        @$el.trigger 'chardinJs:next', [@sequenceIdx, @sequencedItems[@sequenceIdx]]
 
     previous: (delayed) ->
       clearTimeout(@timeOut)
       delayed = if delayed != false then true else false
-      @sequenceIdx--
       idx = @sequenceIdx
       el = @sequencedItems[@sequenceIdx]
       if delayed
         @timeOut = setTimeout (=>
+          @sequenceIdx--
           @_remove_sequenced_element(0)
           @_show_sequenced_element(true)
-          @$el.trigger 'chardinJs:previous', [idx, el]
+          @$el.trigger 'chardinJs:previous', [@sequenceIdx, @sequencedItems[@sequenceIdx]]
         ), @delayTime
       else
+        @sequenceIdx--
         @_remove_sequenced_element(0)
         @_show_sequenced_element(false)
-        @$el.trigger 'chardinJs:previous', [idx, el]
+        @$el.trigger 'chardinJs:previous', [@sequenceIdx, @sequencedItems[@sequenceIdx]]
 
     _overlay_visible: ->
       @$el.find('.chardinjs-overlay').length != 0
