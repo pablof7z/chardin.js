@@ -22,7 +22,7 @@
           return false;
         }
         this._add_overlay_layer();
-        _ref = this.$el.find('*[data-intro]');
+        _ref = this.$el.find('*[data-intro]:visible');
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           el = _ref[_i];
           this._show_element(el);
@@ -42,7 +42,7 @@
         var el, _i, _len, _ref, _results;
 
         if (this._overlay_visible()) {
-          _ref = this.$el.find('*[data-intro]');
+          _ref = this.$el.find('*[data-intro]:visible');
           _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             el = _ref[_i];
