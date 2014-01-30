@@ -8,7 +8,7 @@ do ($ = window.jQuery, window) ->
     start: ->
       return false if @._overlay_visible()
       @._add_overlay_layer()
-      @._show_element(el) for el in @$el.find('*[data-intro]')
+      @._show_element(el) for el in @$el.find('*[data-intro]:visible')
 
       @$el.trigger 'chardinJs:start'
 
@@ -20,7 +20,7 @@ do ($ = window.jQuery, window) ->
 
     refresh: ()->
       if @._overlay_visible()
-        @._position_helper_layer(el) for el in @$el.find('*[data-intro]')
+        @._position_helper_layer(el) for el in @$el.find('*[data-intro]:visible')
       else
         return this
 
