@@ -35,7 +35,7 @@ If you choose to fork the repo you can build the assets running
 Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element, in case you want to specify to move your instructions along the edge of tooltip layer, you can do so, by adding semicolon & number between -100 & 100, like this `data-position='left:-75'`
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
@@ -92,6 +92,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
+ * [sudodoki](https://github.com/sudodoki)
 
 ## Contributions
 
@@ -104,7 +105,7 @@ If you want to contribute, please:
 
 ## License
 
-Copyright 2013 Pablo Fernandez
+Copyright 2014 Pablo Fernandez
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
