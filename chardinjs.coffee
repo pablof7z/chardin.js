@@ -67,7 +67,13 @@ do ($ = window.jQuery, window) ->
         overlay_layer.setAttribute "style", styleText
       , 10
 
-    _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
+    _get_position: (element) ->
+      positionString = element.getAttribute('data-position')
+      positionString.split(':')?[0] or positionString or 'bottom'
+
+    _get_offset_override: (element) ->
+      positionString = element.getAttribute('data-position')
+      1 + parseInt(positionString.split(':')?[1] or 0, 10) / 100 or 1
 
     _place_tooltip: (element) ->
       tooltip_layer = $(element).data('tooltip_layer')
@@ -78,19 +84,19 @@ do ($ = window.jQuery, window) ->
       tooltip_layer.style.right = null
       tooltip_layer.style.bottom = null
       tooltip_layer.style.left = null
-
       switch @._get_position(element)
         when "top", "bottom"
           target_element_position  = @._get_offset(element)
           target_width             = target_element_position.width
           my_width                 = $(tooltip_layer).width()
-          tooltip_layer.style.left = "#{(target_width/2)-(tooltip_layer_position.width/2)}px"
+          tooltip_layer.style.left = "#{(target_width/2) * @_get_offset_override(element) - (tooltip_layer_position.width/2)}px"
         when "left", "right"
           target_element_position = @._get_offset(element)
           target_height           = target_element_position.height
           my_height               = $(tooltip_layer).height()
-          tooltip_layer.style.top = "#{(target_height/2)-(tooltip_layer_position.height/2)}px"
-
+          tooltip_layer.style.top = "#{(target_height/2) * @_get_offset_override(element) - (tooltip_layer_position.height/2)}px"
+      $(tooltip_layer).width my_width if my_width
+      $(tooltip_layer).height my_height if my_height
       switch @._get_position(element)
         when "left" then tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px"
         when "right" then tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px"

@@ -106,7 +106,17 @@
       };
 
       chardinJs.prototype._get_position = function(element) {
-        return element.getAttribute('data-position') || 'bottom';
+        var positionString, _ref;
+
+        positionString = element.getAttribute('data-position');
+        return ((_ref = positionString.split(':')) != null ? _ref[0] : void 0) || positionString || 'bottom';
+      };
+
+      chardinJs.prototype._get_offset_override = function(element) {
+        var positionString, _ref;
+
+        positionString = element.getAttribute('data-position');
+        return 1 + parseInt(((_ref = positionString.split(':')) != null ? _ref[1] : void 0) || 0, 10) / 100 || 1;
       };
 
       chardinJs.prototype._place_tooltip = function(element) {
@@ -124,14 +134,20 @@
             target_element_position = this._get_offset(element);
             target_width = target_element_position.width;
             my_width = $(tooltip_layer).width();
-            tooltip_layer.style.left = "" + ((target_width / 2) - (tooltip_layer_position.width / 2)) + "px";
+            tooltip_layer.style.left = "" + ((target_width / 2) * this._get_offset_override(element) - (tooltip_layer_position.width / 2)) + "px";
             break;
           case "left":
           case "right":
             target_element_position = this._get_offset(element);
             target_height = target_element_position.height;
             my_height = $(tooltip_layer).height();
-            tooltip_layer.style.top = "" + ((target_height / 2) - (tooltip_layer_position.height / 2)) + "px";
+            tooltip_layer.style.top = "" + ((target_height / 2) * this._get_offset_override(element) - (tooltip_layer_position.height / 2)) + "px";
+        }
+        if (my_width) {
+          $(tooltip_layer).width(my_width);
+        }
+        if (my_height) {
+          $(tooltip_layer).height(my_height);
         }
         switch (this._get_position(element)) {
           case "left":
