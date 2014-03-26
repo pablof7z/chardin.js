@@ -121,3 +121,7 @@ limitations under the License.
  [0]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.css
  [1]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.min.js
  [2]: https://github.com/heelhook
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/heelhook/chardin.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
