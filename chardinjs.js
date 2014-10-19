@@ -135,9 +135,9 @@
         }
         switch (this._get_position(element)) {
           case "left":
-            return tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px";
+            return tooltip_layer.style.left = (34 - tooltip_layer_position.width) + "px";
           case "right":
-            return tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px";
+            return tooltip_layer.style.right = (34 - tooltip_layer_position.width) + "px";
           case "bottom":
             return tooltip_layer.style.bottom = "-" + tooltip_layer_position.height + "px";
           case "top":
