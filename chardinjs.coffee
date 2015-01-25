@@ -92,8 +92,8 @@ do ($ = window.jQuery, window) ->
           tooltip_layer.style.top = "#{(target_height/2)-(tooltip_layer_position.height/2)}px"
 
       switch @._get_position(element)
-        when "left" then tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px"
-        when "right" then tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px"
+        when "left" then tooltip_layer.style.left = (34 - tooltip_layer_position.width) + "px"
+        when "right" then tooltip_layer.style.right = (34 - tooltip_layer_position.width) + "px"
         when "bottom" then tooltip_layer.style.bottom = "-" + (tooltip_layer_position.height) + "px"
         when "top" then tooltip_layer.style.top = "-" + (tooltip_layer_position.height) + "px"
 
