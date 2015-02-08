@@ -15,7 +15,7 @@ task :compile do
     system("bundle exec sass --scss #{file} > #{css_name}")
   end
 
-  File.open('chardinjs.min.js', 'w') { |f| f.write Uglifier.compile(File.read('chardinjs.js')) }
+  File.open('chardin.min.js', 'w') { |f| f.write Uglifier.compile(File.read('chardin.js')) }
 end
 
 desc "Watch"

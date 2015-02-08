@@ -12,11 +12,11 @@ the recent Gmail new composer tour which I loved.
 
 ## Installing
 
-Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] and add the following assets to your HTML:
+Simple! Fork this repo or download [chardin.css][0] and [chardin.min.js][1] and add the following assets to your HTML:
 
 ```HTML
-<link href="chardinjs.css" rel="stylesheet">
-<script src="chardinjs.min.js"></script>
+<link href="chardin.css" rel="stylesheet">
+<script src="chardin.min.js"></script>
 ```
 
 ### Installing in the rails asset pipeline (optional) 
@@ -46,39 +46,39 @@ Add the instructions to your elements:
 Once you have your elements ready you can show instructions running
 
 ```Javascript
-$('body').chardinJs('start')
+$('body').chardin('start')
 ```
 
-If you would rather run ChardinJs confined to a particular container (instead of using the whole document) you can
+If you would rather run Chardin.js confined to a particular container (instead of using the whole document) you can
 change `body` to some other selector.
 
 ```Javascript
-$('.container').chardinJs('start')
+$('.container').chardin('start')
 ```
 
 ## Methods
 
-### .chardinJs('start')
+### .chardin('start')
 
-Start ChardinJs in the selector.
+Start Chardin in the selector.
 
-### .chardinJs('toggle')
+### .chardin('toggle')
 
-Toggle ChardinJs.
+Toggle Chardin.
 
-### .chardinJs('stop')
+### .chardin('stop')
 
-Make your best guess. That's right! Stops ChardinJs in the selector.
+Make your best guess. That's right! Stops Chardin in the selector.
 
 ## Events
 
-### 'chardinJs:start'
+### 'chardin:start'
 
-Triggered when chardinJs is correctly started.
+Triggered when chardin is correctly started.
 
-### 'chardinJs:stop'
+### 'chardin:stop'
 
-Triggered when chardinJs is stopped.
+Triggered when chardin is stopped.
 
 ## Author
 
@@ -92,6 +92,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
+ * [Kurt Kotzur](https://github.com/kurtkotzur)
 
 ## Contributions
 
@@ -118,8 +119,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
- [0]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.css
- [1]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.min.js
+ [0]: https://github.com/heelhook/chardin.js/blob/master/chardin.css
+ [1]: https://github.com/heelhook/chardin.js/blob/master/chardin.min.js
  [2]: https://github.com/heelhook
 
 
