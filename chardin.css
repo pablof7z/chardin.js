@@ -1,0 +1,82 @@
+.chardin-overlay {
+  position: absolute;
+  z-index: 999999;
+  background-color: #000;
+  opacity: 0;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
+
+.chardin-helper-layer {
+  position: absolute;
+  z-index: 9999998;
+  color: white;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out; }
+  .chardin-helper-layer.chardin-left {
+    border-left: solid white 1px;
+    margin-left: -10px; }
+  .chardin-helper-layer.chardin-right {
+    border-right: solid white 1px;
+    padding-right: 10px; }
+  .chardin-helper-layer.chardin-bottom {
+    border-bottom: solid white 1px;
+    padding-bottom: 10px; }
+  .chardin-helper-layer.chardin-top {
+    border-top: solid white 1px;
+    padding-top: 10px; }
+
+.chardin-tooltip {
+  position: absolute;
+  -webkit-transition: opacity 0.1s ease-out;
+  -moz-transition: opacity 0.1s ease-out;
+  -ms-transition: opacity 0.1s ease-out;
+  -o-transition: opacity 0.1s ease-out;
+  transition: opacity 0.1s ease-out;
+  max-width: 200px; }
+  .chardin-tooltip.chardin-left {
+    margin-left: -135px;
+    padding-right: 10px; }
+  .chardin-tooltip.chardin-right {
+    margin-right: -135px;
+    padding-left: 10px; }
+  .chardin-tooltip.chardin-bottom {
+    margin-bottom: -50px;
+    padding-top: 10px; }
+  .chardin-tooltip.chardin-top {
+    margin-top: -50px;
+    padding-bottom: 10px; }
+  .chardin-tooltip.chardin-right:before, .chardin-tooltip.chardin-left:after, .chardin-tooltip.chardin-bottom:before, .chardin-tooltip.chardin-top:after {
+    content: ".";
+    display: inline-block;
+    background-color: white;
+    height: 1px;
+    overflow: hidden;
+    position: absolute; }
+  .chardin-tooltip.chardin-right:before, .chardin-tooltip.chardin-left:after {
+    width: 100px;
+    top: 50%; }
+  .chardin-tooltip.chardin-bottom:before, .chardin-tooltip.chardin-top:after {
+    width: 1px;
+    height: 50px;
+    left: 50%; }
+  .chardin-tooltip.chardin-bottom:before {
+    top: -50px; }
+  .chardin-tooltip.chardin-top:after {
+    bottom: -50px; }
+  .chardin-tooltip.chardin-right:before {
+    left: -100px; }
+  .chardin-tooltip.chardin-left:after {
+    right: -100px; }
+
+.chardin-show-element {
+  z-index: 9999999;
+  opacity: 0.8; }
+
+.chardin-relative-position {
+  position: relative; }
