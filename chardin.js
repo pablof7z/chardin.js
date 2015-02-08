@@ -7,24 +7,25 @@
     chardin = (function() {
       function chardin(el) {
         window.chardinTimeouts = [];
-
-        var _this = this;
         this.$el = $(el);
-        $(window).resize(function() {
-          return _this._refresh();
-        });
+        this.clickBlacklist = '';
       }
 
-      chardin.prototype.preOverlaySetup  = function() {};
-      chardin.prototype.postOverlaySetup = function() {};
-      chardin.prototype.getElements      = function() { return this.$el.find('*[data-intro]:visible'); };
-      chardin.prototype.showElement      = function(el, i) { this._showElement(el); };
-      chardin.prototype.finalSetup       = function() {};
-      chardin.prototype.destroy          = function() {};
+      chardin.prototype.preOverlaySetup      = function() {};
+      chardin.prototype.postOverlaySetup     = function() {};
+      chardin.prototype.getElements          = function() { return this.$el.find('*[data-intro]:visible'); };
+      chardin.prototype.showElement          = function(el, i) { this._showElement(el); };
+      chardin.prototype.finalSetup           = function() {};
+      chardin.prototype.destroy              = function() {};
+      chardin.prototype.forceSetupCompletion = function() {};
 
       chardin.prototype.registerTimeout = function(callback, delay) {
         window.chardinTimeouts.push(_.delay(callback, delay));
-      }
+      };
+
+      chardin.prototype.restoreClick = function() {
+        document.removeEventListener('click', this.clickInterceptorBound, true);
+      };
 
       chardin.prototype.start = function() {
         var elements, i, len, el;
@@ -33,6 +34,9 @@
           return false;
         }
 
+        this.refreshBound = this._refresh.bind(this);
+        $(window).on('resize', this.refreshBound);
+
         this.preOverlaySetup();
         this._addOverlayLayer();
         this.postOverlaySetup();
@@ -40,6 +44,11 @@
         _(this.getElements()).each(this.showElement, this);
 
         this.finalSetup();
+
+        this.clickInterceptorBound = this._clickInterceptor.bind(this);
+        document.addEventListener('click', this.clickInterceptorBound, true);
+
+        this._enableEsc();
 
         return this.$el.trigger('chardin:start');
       };
@@ -58,6 +67,11 @@
             document.detachEvent("onkeydown", this._onKeyDown);
           }
         }
+
+        $(window).off('keyup', this.onEscBound);
+        $(window).off('resize', this.refreshBound);
+
+        this.restoreClick();
         this.destroy();
         this._clearTimeouts();
         return this.$el.trigger('chardin:stop');
@@ -100,6 +114,19 @@
         }
       };
 
+      chardin.prototype._clickInterceptor = function(event) {
+        var $target = (event.target);
+        if (target.is(this.clickBlacklist) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      };
+
+      chardin.prototype._enableEsc = function() {
+        this.onEscBound = this._onEsc.bind(this);
+        $(window).on('keyup', this.onEscBound);
+      };
+
       chardin.prototype._getOffset = function(element) {
         var element_position, _x, _y;
 
@@ -121,6 +148,14 @@
 
       chardin.prototype._getPosition = function(element) {
         return element.getAttribute('data-position') || 'bottom';
+      };
+
+      chardin.prototype._onEsc = function(event) {
+        if (event.keyCode === 27) {
+          this._clearTimeouts();
+          this.foreceSetupCompletion();
+          this.stop();
+        }
       };
 
       chardin.prototype._overlayVisible = function() {
