@@ -15,27 +15,29 @@
         });
       }
 
+      chardin.prototype.preOverlaySetup      = function() {};
+      chardin.prototype.postOverlaySetup     = function() {};
+      chardin.prototype.getElements          = function() { return this.$el.find('*[data-intro]:visible'); };
+      chardin.prototype.showElement          = function(el, i) { this._showElement(el); };
+      chardin.prototype.finalSetup           = function() {};
+      chardin.prototype.destroy              = function() {};
+
       chardin.prototype.start = function() {
         var elements, i, len, el;
 
         if (this._overlayVisible()) {
           return false;
         }
-        this._addOverlayLayer();
-        _ref = this.$el.find('*[data-intro]:visible');
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          el = _ref[_i];
-          this._showElement(el);
-        }
-        return this.$el.trigger('chardin:start');
-      };
 
-      chardin.prototype.toggle = function() {
-        if (!this._overlayVisible()) {
-          return this.start();
-        } else {
-          return this.stop();
-        }
+        this.preOverlaySetup();
+        this._addOverlayLayer();
+        this.postOverlaySetup();
+
+        _(this.getElements()).each(this.showElement, this);
+
+        this.finalSetup();
+
+        return this.$el.trigger('chardin:start');
       };
 
       chardin.prototype.refresh = function() {
@@ -68,6 +70,7 @@
             document.detachEvent("onkeydown", this._onKeyDown);
           }
         }
+        this.destroy();
         return this.$el.trigger('chardin:stop');
       };
 
