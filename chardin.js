@@ -9,6 +9,7 @@
         window.chardinTimeouts = [];
         this.$el = $(el);
         this.clickBlacklist = '';
+        this.transitionEndEvent = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
       }
 
       chardin.prototype.preOverlaySetup      = function() {};
@@ -75,6 +76,16 @@
         this.destroy();
         this._clearTimeouts();
         return this.$el.trigger('chardin:stop');
+      };
+
+      chardin.prototype.transition = function(value) {
+        return {
+          'transition': value,
+          '-webkit-transition': value,
+          '-moz-transition': value,
+          '-ms-transition': value,
+          '-o-transition': value
+        };
       };
 
       chardin.prototype._addOverlayLayer = function() {
