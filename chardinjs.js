@@ -11,7 +11,7 @@
 
         this.$el = $(el);
         $(window).resize(function() {
-          return _this.refresh();
+          return _this._refresh();
         });
       }
 
@@ -40,22 +40,6 @@
         return this.$el.trigger('chardin:start');
       };
 
-      chardin.prototype.refresh = function() {
-        var el, _i, _len, _ref, _results;
-
-        if (this._overlayVisible()) {
-          _ref = this.$el.find('*[data-intro]:visible');
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            el = _ref[_i];
-            _results.push(this._positionHelperLayer(el));
-          }
-          return _results;
-        } else {
-          return this;
-        }
-      };
-
       chardin.prototype.stop = function() {
         this.$el.find(".chardin-overlay").fadeOut(function() {
           return $(this).remove();
@@ -72,10 +56,6 @@
         }
         this.destroy();
         return this.$el.trigger('chardin:stop');
-      };
-
-      chardin.prototype._overlayVisible = function() {
-        return this.$el.find('.chardin-overlay').length !== 0;
       };
 
       chardin.prototype._addOverlayLayer = function() {
@@ -108,8 +88,31 @@
         }, 10);
       };
 
+      chardin.prototype._getOffset = function(element) {
+        var element_position, _x, _y;
+
+        element_position = {
+          width: element.offsetWidth,
+          height: element.offsetHeight
+        };
+        _x = 0;
+        _y = 0;
+        while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
+          _x += element.offsetLeft;
+          _y += element.offsetTop;
+          element = element.offsetParent;
+        }
+        element_position.top = _y;
+        element_position.left = _x;
+        return element_position;
+      };
+
       chardin.prototype._getPosition = function(element) {
         return element.getAttribute('data-position') || 'bottom';
+      };
+
+      chardin.prototype._overlayVisible = function() {
+        return this.$el.find('.chardin-overlay').length !== 0;
       };
 
       chardin.prototype._placeTooltip = function(element) {
@@ -156,6 +159,22 @@
         return helper_layer.setAttribute("style", "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px; left: " + element_position.left + "px;");
       };
 
+      chardin.prototype._refresh = function() {
+        var el, _i, _len, _ref, _results;
+
+        if (this._overlayVisible()) {
+          _ref = this.$el.find('*[data-intro]:visible');
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            el = _ref[_i];
+            _results.push(this._positionHelperLayer(el));
+          }
+          return _results;
+        } else {
+          return this;
+        }
+      };
+
       chardin.prototype._showElement = function(element) {
         var current_element_position, element_position, helper_layer, tooltip_layer;
 
@@ -186,25 +205,6 @@
         if (current_element_position !== "absolute" && current_element_position !== "relative") {
           return element.className += " chardin-relative-position";
         }
-      };
-
-      chardin.prototype._getOffset = function(element) {
-        var element_position, _x, _y;
-
-        element_position = {
-          width: element.offsetWidth,
-          height: element.offsetHeight
-        };
-        _x = 0;
-        _y = 0;
-        while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
-          _x += element.offsetLeft;
-          _y += element.offsetTop;
-          element = element.offsetParent;
-        }
-        element_position.top = _y;
-        element_position.left = _x;
-        return element_position;
       };
 
       return chardin;
