@@ -1,4 +1,4 @@
-.chardinjs-overlay {
+.chardin-overlay {
   position: absolute;
   z-index: 999999;
   background-color: #000;
@@ -9,7 +9,7 @@
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out; }
 
-.chardinjs-helper-layer {
+.chardin-helper-layer {
   position: absolute;
   z-index: 9999998;
   color: white;
@@ -18,20 +18,20 @@
   -ms-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out; }
-  .chardinjs-helper-layer.chardinjs-left {
+  .chardin-helper-layer.chardin-left {
     border-left: solid white 1px;
     margin-left: -10px; }
-  .chardinjs-helper-layer.chardinjs-right {
+  .chardin-helper-layer.chardin-right {
     border-right: solid white 1px;
     padding-right: 10px; }
-  .chardinjs-helper-layer.chardinjs-bottom {
+  .chardin-helper-layer.chardin-bottom {
     border-bottom: solid white 1px;
     padding-bottom: 10px; }
-  .chardinjs-helper-layer.chardinjs-top {
+  .chardin-helper-layer.chardin-top {
     border-top: solid white 1px;
     padding-top: 10px; }
 
-.chardinjs-tooltip {
+.chardin-tooltip {
   position: absolute;
   -webkit-transition: opacity 0.1s ease-out;
   -moz-transition: opacity 0.1s ease-out;
@@ -39,44 +39,44 @@
   -o-transition: opacity 0.1s ease-out;
   transition: opacity 0.1s ease-out;
   max-width: 200px; }
-  .chardinjs-tooltip.chardinjs-left {
+  .chardin-tooltip.chardin-left {
     margin-left: -135px;
     padding-right: 10px; }
-  .chardinjs-tooltip.chardinjs-right {
+  .chardin-tooltip.chardin-right {
     margin-right: -135px;
     padding-left: 10px; }
-  .chardinjs-tooltip.chardinjs-bottom {
+  .chardin-tooltip.chardin-bottom {
     margin-bottom: -50px;
     padding-top: 10px; }
-  .chardinjs-tooltip.chardinjs-top {
+  .chardin-tooltip.chardin-top {
     margin-top: -50px;
     padding-bottom: 10px; }
-  .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after, .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
+  .chardin-tooltip.chardin-right:before, .chardin-tooltip.chardin-left:after, .chardin-tooltip.chardin-bottom:before, .chardin-tooltip.chardin-top:after {
     content: ".";
     display: inline-block;
     background-color: white;
     height: 1px;
     overflow: hidden;
     position: absolute; }
-  .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after {
+  .chardin-tooltip.chardin-right:before, .chardin-tooltip.chardin-left:after {
     width: 100px;
     top: 50%; }
-  .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
+  .chardin-tooltip.chardin-bottom:before, .chardin-tooltip.chardin-top:after {
     width: 1px;
     height: 50px;
     left: 50%; }
-  .chardinjs-tooltip.chardinjs-bottom:before {
+  .chardin-tooltip.chardin-bottom:before {
     top: -50px; }
-  .chardinjs-tooltip.chardinjs-top:after {
+  .chardin-tooltip.chardin-top:after {
     bottom: -50px; }
-  .chardinjs-tooltip.chardinjs-right:before {
+  .chardin-tooltip.chardin-right:before {
     left: -100px; }
-  .chardinjs-tooltip.chardinjs-left:after {
+  .chardin-tooltip.chardin-left:after {
     right: -100px; }
 
-.chardinjs-show-element {
+.chardin-show-element {
   z-index: 9999999;
   opacity: 0.8; }
 
-.chardinjs-relative-position {
+.chardin-relative-position {
   position: relative; }

@@ -2,7 +2,7 @@
   "name": "chardin.js",
   "version": "1.0.0",
   "description": "Simple overlay instructions for your apps.",
-  "main": "chardinjs.js",
+  "main": "chardin.js",
   "directories": {
     "example": "example"
   },

@@ -1,7 +1,7 @@
 {
     "name": "heelhook/chardin.js",
     "version": "0.1.3",
-    "main": ["chardinjs.min.js", "chardinjs.js"],
+    "main": ["chardin.min.js", "chardin.js"],
     "description": "Simple overlay instructions for your apps.",
     "license": "Apache",
     "dependencies": {
