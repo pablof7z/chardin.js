@@ -10,6 +10,7 @@
         this.$el = $(el);
         this.clickBlacklist = '';
         this.helperLayers = {};
+        this.zIndexSuspendedElements = [];
         this.transitionEndEvent = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
       }
 
@@ -19,7 +20,6 @@
       chardin.prototype.showElement          = function(el, i) { this._showElement(el); };
       chardin.prototype.finalSetup           = function() { this.finished = true; };
       chardin.prototype.destroy              = function() {};
-      chardin.prototype.forceSetupCompletion = function() {};
 
       chardin.prototype.registerTimeout = function(callback, delay) {
         window.chardinTimeouts.push(_.delay(callback, delay));
@@ -48,6 +48,7 @@
 
         this.preOverlaySetup();
         this._addOverlayLayer();
+        this._suspendZIndexes();
         this.postOverlaySetup();
 
         _(this.getElements()).each(this.showElement, this);
@@ -62,8 +63,7 @@
       };
 
       chardin.prototype.stop = function() {
-        var that = this,
-            $overlay = this.$el.find('.chardin-overlay');
+        var $overlay = this.$el.find('.chardin-overlay');
 
         $(window).off('keyup', this.onEscBound);
         $(window).off('resize', this.refreshBound);
@@ -77,7 +77,8 @@
         $overlay.on(this.transitionEndEvent, function() {
           $overlay.remove();
         });
-        return that.$el.trigger('chardin:stop');
+        this._replaceZIndexes();
+        this.$el.trigger('chardin:stop');
       };
 
       chardin.prototype.toggle = function() {
@@ -143,6 +144,20 @@
         }
       };
 
+      chardin.prototype._climbTree = function(el) {
+        var $current = $(el).parent(), currentIndex;
+        while ($current.parent().length) {
+          currentIndex = $current.css('z-index');
+          if (currentIndex !== 'auto') {
+            $current
+              .css('z-index', 'auto')
+              .data('chardin-suspended', currentIndex);
+            this.zIndexSuspendedElements.push($current[0]);
+          }
+          $current = $current.parent();
+        }
+      }
+
       chardin.prototype._disableClick = function() {
         this.clickInterceptorBound = this._clickInterceptor.bind(this);
         document.addEventListener('click', this.clickInterceptorBound, true);
@@ -169,13 +184,12 @@
       chardin.prototype._onEsc = function(event) {
         if (event.keyCode === 27) {
           this._clearTimeouts();
-          this.foreceSetupCompletion();
           this.stop();
         }
       };
 
       chardin.prototype._overlayVisible = function() {
-        return !!this.$el.find('.chardin-overlay').length;
+        return !this.$el.find('.chardin-overlay').length !== 0;
       };
 
       chardin.prototype._placeTooltip = function(el, tooltipLayer) {
@@ -208,7 +222,6 @@
           case 'top':
             return tooltipLayer.style.top = '-' + tooltipLayerOffset.height + 'px';
         }
-
       };
 
       chardin.prototype._positionHelperLayer = function(el) {
@@ -218,6 +231,19 @@
       chardin.prototype._refresh = function() {
         if (this._overlayVisible()) {
           _(this.getElements()).each(this._positionHelperLayer, this);
+        }
+      };
+
+      chardin.prototype._replaceZIndexes = function() {
+        var el;
+        while (this.zIndexSuspendedElements.length) {
+          el = this.zIndexSuspendedElements.pop();
+          $(el).attr('style', function(i, style) {
+            var $this = $(this),
+                suspended = $this.data('chardin-suspended');
+            $this.removeData('chardin-suspended');
+            return style.replace(/z-index: auto; ?/g, 'z-index: ' + suspended + '; ');
+          });
         }
       };
 
@@ -252,6 +278,10 @@
         if (currentElementPosition !== 'absolute' && currentElementPosition !== 'relative') {
           $el.addClass('chardin-relative-position');
         }
+      };
+
+      chardin.prototype._suspendZIndexes = function() {
+        _(this.getElements()).each(this._climbTree, this);
       };
 
       return chardin;

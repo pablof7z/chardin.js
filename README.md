@@ -80,6 +80,46 @@ Triggered when chardin is correctly started.
 
 Triggered when chardin is stopped.
 
+## Extensions
+
+A number of interface methods have been provided to facilitate the customization of this library to specific user needs. The intended pattern is to add a function that extends `chardin.prototype` to the `decorators` object of the plugin. The following descriptions are oriented toward the idea of one customizing the plugin to create a guided tour with elements and tooltips revealed in sequence, after which a video is displayed.
+
+### User interaction
+
+In order to prevent users from interacting with the document until the tour has completed, click events on the document are intercepted for its duration. By default, the click interceptor does nothing. If you want to only intercept clicking for certain elements, specify them in `this.clickBlacklist` (e.g. `:not(.tour-clickable)`).
+
+The escape key is also endowed with a listener that calls `stop()`. This is added with the idea that users may want to exit the tour early.
+
+All additional listeners are removed when the overlay is closed.
+
+### `preOverlaySetup()`, `postOverlaySetup()`, `finalSetup()`
+
+These functions are called in sequence in `start()`, with `finalSetup()` after the tooltips have been shown and the start event has been triggered.
+
+### `getElements()`
+
+By default, this returns the elements with a `data-intro` attribute. One might customize it in order to sort these elements by a `data-ord` attribute, in order to reveal elements in a sequence.
+
+### `showElement(el, i)`
+
+This delegates to the internal `_showElement(el)` method by default. `el` is the element itself, and `i` refers to its index in the list returned by `getElements()`. Again, additional logic can be added around this as appropriate. One might call this method with a timeout in order to create an ordered tour.
+
+### `destroy()`
+
+Called in `stop` before the overlay is removed. Clean up any extra listeners or other items here.
+
+### `registerTimeout(callback, delay)`
+
+Add to chardin's internal list of timeouts, to be automatically cleaned up at the end of the tour.
+
+### `removeTooltips(selector)`
+
+Remove the plugin's text tooltips without actually closing the tour. One might implement this in order to display a video after all the items have been revealed. Optionally provide a selector (e.g. `:not(.persistent)`) in order to remove only certain tooltips.
+
+### `restoreClick()`
+
+Restore normal click behavior to the document. Again, this might be used to enable video controls after the main portion of the tour has ended.
+
 ## Author
 
 [Pablo Fernandez][2]
