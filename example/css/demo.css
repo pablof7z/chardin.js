@@ -54,11 +54,11 @@ body {
   color: #444444;
 }
 
-.jumbotron h1.chardinjs-show-element, .chardinjs-show-element {
+.jumbotron h1.chardin-show-element, .chardin-show-element {
   color: #cccccc;
 }
 
-.chardinjs-show-element a {
+.chardin-show-element a {
   color: rgba(77, 186, 240, 1);
 }
 
@@ -94,6 +94,6 @@ body {
   margin: 10px;
 }
 
-.chardinjs-helper-layer[data-id="links"] .chardinjs-tooltip:after {
+.chardin-helper-layer[data-id="links"] .chardin-tooltip:after {
   left: 10%;
 }
