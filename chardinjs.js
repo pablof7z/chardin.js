@@ -96,11 +96,16 @@
           }
         }
         this.$el.get()[0].appendChild(overlay_layer);
+        overlay_layer.innerHTML = '<svg style="width:100%;height:100%;"><defs><mask id="chardinjs-mask" x="0" y="0" width="'
+                + overlay_layer.offsetWidth + '" height="' + overlay_layer.offsetHeight + '" ><rect x="0" y="0" width="'
+                + overlay_layer.offsetWidth + '" height="' + overlay_layer.offsetHeight + '" style="stroke:none; fill: #ffffff"/>'
+                + '</mask></defs><rect x="0" y="0" width="'
+                + overlay_layer.offsetWidth + '" height="' + overlay_layer.offsetHeight + '" style="stroke: none; fill: rgba(0,0,0,.8); mask: url(#chardinjs-mask)"/></svg>';
         overlay_layer.onclick = function() {
           return _this.stop();
         };
         return setTimeout(function() {
-          styleText += "opacity: .8;opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);";
+          styleText += "opacity:1;background:none;";
           return overlay_layer.setAttribute("style", styleText);
         }, 10);
       };
@@ -150,6 +155,7 @@
 
         helper_layer = $(element).data('helper_layer');
         element_position = this._get_offset(element);
+        document.getElementById("chardinjs-mask").innerHTML += '<rect x="' + element_position.left + '" y="' + element_position.top + '" width="' + element_position.width + '" height="' + element_position.height + '" style="stroke:none; fill: #000"></rect>';
         return helper_layer.setAttribute("style", "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px; left: " + element_position.left + "px;");
       };
 
