@@ -1,14 +1,16 @@
 do ($ = window.jQuery, window) ->
+  
   # Define the plugin class
   class chardinJs
     constructor: (el) ->
+      @.data_attribute = 'data-intro';
       @$el = $(el)
       $(window).resize => @.refresh()
 
     start: ->
       return false if @._overlay_visible()
       @._add_overlay_layer()
-      @._show_element(el) for el in @$el.find('*[data-intro]:visible')
+      @._show_element(el) for el in @$el.find('*['+@.data_attribute+']:visible')
 
       @$el.trigger 'chardinJs:start'
 
@@ -20,7 +22,7 @@ do ($ = window.jQuery, window) ->
 
     refresh: ()->
       if @._overlay_visible()
-        @._position_helper_layer(el) for el in @$el.find('*[data-intro]:visible')
+        @._position_helper_layer(el) for el in @$el.find('*['+@.data_attribute+']:visible')
       else
         return this
 
@@ -38,6 +40,9 @@ do ($ = window.jQuery, window) ->
       else document.detachEvent "onkeydown", @_onKeyDown  if document.detachEvent
 
       @$el.trigger 'chardinJs:stop'
+
+    set_data_attribute: (attribute) ->
+      @.data_attribute = attribute
 
     _overlay_visible: ->
       @$el.find('.chardinjs-overlay').length != 0
@@ -117,7 +122,7 @@ do ($ = window.jQuery, window) ->
       @._position_helper_layer element
       @$el.get()[0].appendChild helper_layer
       tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
-      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
+      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute(@.data_attribute)}</div>"
       helper_layer.appendChild tooltip_layer
 
       @._place_tooltip element
@@ -157,4 +162,10 @@ do ($ = window.jQuery, window) ->
       $this.data 'chardinJs', (data = new chardinJs(this, option))
     if typeof option == 'string'
       data[option].apply(data, args)
+    else if typeof option == 'object'
+      if typeof option['attribute'] == 'string'
+        data.set_data_attribute(option['attribute'])
+      if typeof option['method'] == 'string'
+        data[option['method']].apply(data, args)
+
     data
