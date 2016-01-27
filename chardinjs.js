@@ -7,6 +7,7 @@
     chardinJs = (function() {
       function chardinJs(el) {
         this.data_attribute = 'data-intro';
+        this.chardinCssClasses = ["chardinjs-helper-layer", "chardinjs-show-element", "chardinjs-relative-position"];
         this.$el = $(el);
         $(window).resize((function(_this) {
           return function() {
@@ -53,12 +54,16 @@
       };
 
       chardinJs.prototype.stop = function() {
+        var css, i, len, ref;
         this.$el.find(".chardinjs-overlay").fadeOut(function() {
           return $(this).remove();
         });
         this.$el.find('.chardinjs-helper-layer').remove();
-        this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
-        this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
+        ref = this.chardinCssClasses;
+        for (i = 0, len = ref.length; i < len; i++) {
+          css = ref[i];
+          this._remove_classes(css);
+        }
         if (window.removeEventListener) {
           window.removeEventListener("keydown", this._onKeyDown, true);
         } else {
@@ -67,6 +72,10 @@
           }
         }
         return this.$el.trigger('chardinJs:stop');
+      };
+
+      chardinJs.prototype._remove_classes = function(css) {
+        return this.$el.find('.' + css).removeClass(css);
       };
 
       chardinJs.prototype.set_data_attribute = function(attribute) {
@@ -111,6 +120,27 @@
         return element.getAttribute('data-position') || 'bottom';
       };
 
+      chardinJs.prototype._get_css_attribute = function(element) {
+        var css, cssClasses, i, len, value;
+        value = element.getAttribute(this.data_attribute + "-css") || '';
+        if (value && String(value).replace(/\s/g, "").length > 1) {
+          cssClasses = (value.split(" ")).filter(function(css) {
+            return css.length !== 0;
+          });
+          for (i = 0, len = cssClasses.length; i < len; i++) {
+            css = cssClasses[i];
+            this._add_css_attribute(css);
+          }
+        }
+        return value;
+      };
+
+      chardinJs.prototype._add_css_attribute = function(css) {
+        if (!$.inArray(css, this.chardinCssClasses) > -1) {
+          return this.chardinCssClasses.push(css);
+        }
+      };
+
       chardinJs.prototype._getStyle = function(el, styleProp, special) {
         if (window.getComputedStyle) {
           return window.getComputedStyle(el, special).getPropertyValue(styleProp);
@@ -120,7 +150,7 @@
       };
 
       chardinJs.prototype._place_tooltip = function(element, tooltip_layer) {
-        var my_height, my_width, offset, position, target_element_position, target_height, target_width, tooltipActualWidth, tooltipMaxWidth, tooltip_layer_position;
+        var my_height, offset, position, target_element_position, target_height, target_width, tooltipActualWidth, tooltipMaxWidth, tooltip_layer_position;
         tooltip_layer_position = this._get_offset(tooltip_layer);
         tooltip_layer.style.top = null;
         tooltip_layer.style.right = null;
@@ -132,7 +162,6 @@
           case "bottom":
             target_element_position = this._get_offset(element);
             target_width = target_element_position.width;
-            my_width = $(tooltip_layer).width();
             tooltip_layer.style.left = ((target_width / 2) - (tooltip_layer_position.width / 2)) + "px";
             return tooltip_layer.style[position] = "-" + tooltip_layer_position.height + "px";
           case "left":
@@ -171,7 +200,7 @@
         tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute(this.data_attribute)) + "</div>";
         helper_layer.appendChild(tooltip_layer);
         this._place_tooltip(element, tooltip_layer);
-        element.className += " chardinjs-show-element";
+        element.className += " chardinjs-show-element " + this._get_css_attribute(element);
         current_element_position = "";
         if (element.currentStyle) {
           current_element_position = element.currentStyle["position"];

@@ -4,6 +4,9 @@ do ($ = window.jQuery, window) ->
   class chardinJs
     constructor: (el) ->
       @.data_attribute = 'data-intro';
+      @.chardinCssClasses = ["chardinjs-helper-layer",
+                          "chardinjs-show-element",
+                          "chardinjs-relative-position"];
       @$el = $(el)
       $(window).resize => @.refresh()
 
@@ -31,8 +34,7 @@ do ($ = window.jQuery, window) ->
 
       @$el.find('.chardinjs-helper-layer').remove()
 
-      @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
-      @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
+      @._remove_classes css for css in @.chardinCssClasses
 
       if window.removeEventListener
         window.removeEventListener "keydown", @_onKeyDown, true
@@ -41,6 +43,9 @@ do ($ = window.jQuery, window) ->
 
       @$el.trigger 'chardinJs:stop'
 
+    _remove_classes: (css)  -> 
+      @$el.find('.' + css).removeClass(css)
+      
     set_data_attribute: (attribute) ->
       @.data_attribute = attribute
 
@@ -74,6 +79,17 @@ do ($ = window.jQuery, window) ->
 
     _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
 
+    _get_css_attribute: (element) ->
+        value = element.getAttribute(@.data_attribute + "-css") || '';
+        if value and String(value).replace(/\s/g, "").length > 1
+          cssClasses = (value.split " ").filter (css) -> css.length != 0
+          @._add_css_attribute css for css in cssClasses
+        value
+    
+    _add_css_attribute: (css) ->
+      if !$.inArray(css, @.chardinCssClasses) > -1
+        @.chardinCssClasses.push(css); 
+    
     _getStyle : (el, styleProp, special) ->
         if (window.getComputedStyle)
           window.getComputedStyle(el, special).getPropertyValue(styleProp)
@@ -87,22 +103,21 @@ do ($ = window.jQuery, window) ->
       tooltip_layer.style.right = null
       tooltip_layer.style.bottom = null
       tooltip_layer.style.left = null
-      position = this._get_position(element);
+      position = @._get_position(element);
       switch position
         when "top", "bottom"
           target_element_position  = @._get_offset(element)
           target_width             = target_element_position.width
-          my_width                 = $(tooltip_layer).width()
           tooltip_layer.style.left = "#{(target_width/2)-(tooltip_layer_position.width/2)}px"
           tooltip_layer.style[position] = "-" + (tooltip_layer_position.height) + "px"
         when "left", "right"
-          tooltipMaxWidth = parseFloat(this._getStyle(tooltip_layer, "max-width"));
+          tooltipMaxWidth = parseFloat(@._getStyle(tooltip_layer, "max-width"));
           tooltip_layer.style[position] = "-" + tooltipMaxWidth + "px"; # The computed size is wrong before this.
           target_element_position = @._get_offset(element)
           target_height           = target_element_position.height
           my_height               = parseFloat(@._getStyle(tooltip_layer, "height"))
           tooltip_layer.style.top = "#{(target_height/2)-(my_height/2)}px"
-          tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"))
+          tooltipActualWidth = parseFloat(@._getStyle(tooltip_layer, "width"))
           offset = 175 - (tooltipMaxWidth - tooltipActualWidth)
           tooltip_layer.style[position] = "-" + offset + "px"
 
@@ -130,7 +145,7 @@ do ($ = window.jQuery, window) ->
 
       @._place_tooltip element, tooltip_layer
 
-      element.className += " chardinjs-show-element"
+      element.className += " chardinjs-show-element " + @._get_css_attribute element
 
       current_element_position = ""
       if element.currentStyle #IE
