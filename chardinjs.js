@@ -6,6 +6,7 @@
     var chardinJs;
     chardinJs = (function() {
       function chardinJs(el) {
+        this.data_attribute = 'data-intro';
         this.$el = $(el);
         $(window).resize((function(_this) {
           return function() {
@@ -20,7 +21,7 @@
           return false;
         }
         this._add_overlay_layer();
-        ref = this.$el.find('*[data-intro]:visible');
+        ref = this.$el.find('*[' + this.data_attribute + ']:visible');
         for (i = 0, len = ref.length; i < len; i++) {
           el = ref[i];
           this._show_element(el);
@@ -39,7 +40,7 @@
       chardinJs.prototype.refresh = function() {
         var el, i, len, ref, results;
         if (this._overlay_visible()) {
-          ref = this.$el.find('*[data-intro]:visible');
+          ref = this.$el.find('*[' + this.data_attribute + ']:visible');
           results = [];
           for (i = 0, len = ref.length; i < len; i++) {
             el = ref[i];
@@ -66,6 +67,10 @@
           }
         }
         return this.$el.trigger('chardinJs:stop');
+      };
+
+      chardinJs.prototype.set_data_attribute = function(attribute) {
+        return this.data_attribute = attribute;
       };
 
       chardinJs.prototype._overlay_visible = function() {
@@ -163,7 +168,7 @@
         this._position_helper_layer(element);
         this.$el.get()[0].appendChild(helper_layer);
         tooltip_layer.className = "chardinjs-tooltip chardinjs-" + (this._get_position(element));
-        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute('data-intro')) + "</div>";
+        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute(this.data_attribute)) + "</div>";
         helper_layer.appendChild(tooltip_layer);
         this._place_tooltip(element, tooltip_layer);
         element.className += " chardinjs-show-element";
@@ -213,6 +218,13 @@
         }
         if (typeof option === 'string') {
           data[option].apply(data, args);
+        } else if (typeof option === 'object') {
+          if (typeof option['attribute'] === 'string') {
+            data.set_data_attribute(option['attribute']);
+          }
+          if (typeof option['method'] === 'string') {
+            data[option['method']].apply(data, args);
+          }
         }
         return data;
       }
