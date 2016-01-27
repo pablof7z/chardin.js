@@ -1,5 +1,5 @@
 $ ->
-  $('body').chardinJs()
+  $('body').chardinJs({'attribute':'data-intro'})
 
   $('a[data-toggle="chardinjs"]').on 'click', (e) ->
     e.preventDefault()
