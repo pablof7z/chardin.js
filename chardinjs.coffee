@@ -69,33 +69,37 @@ do ($ = window.jQuery, window) ->
 
     _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
 
-    _place_tooltip: (element) ->
-      tooltip_layer = $(element).data('tooltip_layer')
-      tooltip_layer_position = @._get_offset(tooltip_layer)
+    _getStyle : (el, styleProp, special) ->
+        if (window.getComputedStyle)
+          window.getComputedStyle(el, special).getPropertyValue(styleProp)
+        else
+          el.currentStyle[styleProp]
 
+    _place_tooltip: (element, tooltip_layer) ->
+      tooltip_layer_position = @._get_offset(tooltip_layer)
       #reset the old style
       tooltip_layer.style.top = null
       tooltip_layer.style.right = null
       tooltip_layer.style.bottom = null
       tooltip_layer.style.left = null
-
-      switch @._get_position(element)
+      position = this._get_position(element);
+      switch position
         when "top", "bottom"
           target_element_position  = @._get_offset(element)
           target_width             = target_element_position.width
           my_width                 = $(tooltip_layer).width()
           tooltip_layer.style.left = "#{(target_width/2)-(tooltip_layer_position.width/2)}px"
+          tooltip_layer.style[position] = "-" + (tooltip_layer_position.height) + "px"
         when "left", "right"
+          tooltipMaxWidth = parseFloat(this._getStyle(tooltip_layer, "max-width"));
+          tooltip_layer.style[position] = "-" + tooltipMaxWidth + "px"; # The computed size is wrong before this.
           target_element_position = @._get_offset(element)
           target_height           = target_element_position.height
-          my_height               = $(tooltip_layer).height()
-          tooltip_layer.style.top = "#{(target_height/2)-(tooltip_layer_position.height/2)}px"
-
-      switch @._get_position(element)
-        when "left" then tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px"
-        when "right" then tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px"
-        when "bottom" then tooltip_layer.style.bottom = "-" + (tooltip_layer_position.height) + "px"
-        when "top" then tooltip_layer.style.top = "-" + (tooltip_layer_position.height) + "px"
+          my_height               = parseFloat(@._getStyle(tooltip_layer, "height"))
+          tooltip_layer.style.top = "#{(target_height/2)-(my_height/2)}px"
+          tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"))
+          offset = 175 - (tooltipMaxWidth - tooltipActualWidth)
+          tooltip_layer.style[position] = "-" + offset + "px"
 
     _position_helper_layer: (element) ->
       helper_layer = $(element).data('helper_layer')
@@ -103,7 +107,6 @@ do ($ = window.jQuery, window) ->
       helper_layer.setAttribute "style", "width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
 
     _show_element: (element) ->
-      element_position = @._get_offset(element)
       helper_layer     = document.createElement("div")
       tooltip_layer    = document.createElement("div")
 
@@ -120,7 +123,7 @@ do ($ = window.jQuery, window) ->
       tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
       helper_layer.appendChild tooltip_layer
 
-      @._place_tooltip element
+      @._place_tooltip element, tooltip_layer
 
       element.className += " chardinjs-show-element"
 
