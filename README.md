@@ -131,4 +131,3 @@ limitations under the License.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/heelhook/chardin.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-Documentation is written for new feature and added myself to contributers.
