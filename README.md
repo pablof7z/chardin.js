@@ -35,7 +35,11 @@ If you choose to fork the repo you can build the assets running
 Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+#### Optional Parameters:
+`data-documentation-text'`: _Optional text_ for the suffix link, _default to 'more...'_  
+`data-documentation-link`: _Optional link_ address, _defaults to '#'_  
+`data-open-documentation-active-window`: _Optional attribute,_ if specified opens the link in current tab/window.  
+`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element  
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
@@ -92,6 +96,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
+ * [pegasuspect](https://github.com/pegasuspect)
 
 ## Contributions
 
@@ -124,3 +129,4 @@ limitations under the License.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/heelhook/chardin.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+Documentation is written for new feature and added myself to contributers.
