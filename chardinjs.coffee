@@ -106,10 +106,20 @@ do ($ = window.jQuery, window) ->
       element_position = @._get_offset(element)
       helper_layer     = document.createElement("div")
       tooltip_layer    = document.createElement("div")
+      tooltip_link     = document.createElement("a")
 
       $(element)
         .data('helper_layer', helper_layer)
         .data('tooltip_layer',tooltip_layer)
+        .data('tooltip_link',tooltip_link)
+
+      documentationText = element.getAttribute('data-documentation-text');
+      documentationLink = element.getAttribute('data-documentation-link')
+      isTargetBlank = !element.getAttribute('data-open-documentation-active-window')
+
+      tooltip_link.innerHTML = documentationText ? "more..."
+      tooltip_link.setAttribute "href", documentationLink ? "#"
+      tooltip_link.setAttribute "target", "_blank" if documentationLink && isTargetBlank
 
       helper_layer.setAttribute "data-id", element.id if element.id
       helper_layer.className = "chardinjs-helper-layer chardinjs-#{@._get_position(element)}"
@@ -117,8 +127,12 @@ do ($ = window.jQuery, window) ->
       @._position_helper_layer element
       @$el.get()[0].appendChild helper_layer
       tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
-      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
+
+      introHTML = element.getAttribute('data-intro')
+      introHTML += " " + tooltip_link.outerHTML if documentationLink || documentationText
+      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{introHTML}</div>"
       helper_layer.appendChild tooltip_layer
+
 
       @._place_tooltip element
 
