@@ -36,13 +36,15 @@ Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
 #### Optional Parameters:
-`data-documentation-text'`: _Optional text_ for the suffix link, _default to 'more...'_  
-`data-documentation-link`: _Optional link_ address, _defaults to '#'_  
+`data-documentation-text`: _Optional text_ for the suffix link, defaults to _'more...'_  
+`data-documentation-link`: _Optional link_ address, defaults to _'#'_  
 `data-open-documentation-active-window`: _Optional attribute,_ if specified opens the link in current tab/window.  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element  
+`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element, defaults to _'bottom'_  
 
 ```HTML
-<img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
+  <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things."
+    data-position="right" data-documentation-text="read more"  
+    data-documentation-link="http://en.wikipedia.org/wiki/Jean-Baptiste-Sim%C3%A9on_Chardin" />
 ```
 
 ## Running
