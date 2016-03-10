@@ -19,7 +19,7 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
-### Installing in the rails asset pipeline (optional) 
+### Installing in the rails asset pipeline (optional)
 
 There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
 
@@ -124,4 +124,3 @@ limitations under the License.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/heelhook/chardin.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
