@@ -42,9 +42,9 @@ Add the instructions to your elements:
 `data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element, defaults to _'bottom'_  
 
 ```HTML
-  <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things."
-    data-position="right" data-documentation-text="read more"  
-    data-documentation-link="http://en.wikipedia.org/wiki/Jean-Baptiste-Sim%C3%A9on_Chardin" />
+<img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things."
+  data-position="right" data-documentation-link="http://en.wikipedia.org/wiki/Jean-Baptiste-Siméon_Chardin"
+  data-documentation-text="Read more?"/>
 ```
 
 ## Running
