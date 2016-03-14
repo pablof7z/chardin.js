@@ -28,10 +28,10 @@ do ($ = window.jQuery, window) ->
       @$el.find(".chardinjs-overlay").fadeOut -> $(this).remove()
 
       @$el.find('.chardinjs-helper-layer').remove()
-
+      
+      @$el.find('.chardinjs-show-element').parents().removeClass("chardinjs-parent-toggle-fix")
       @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
       @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
-      $(element).parents().removeClass("chardinjs-parent-toggle-fix")
 
       if window.removeEventListener
         window.removeEventListener "keydown", @_onKeyDown, true
