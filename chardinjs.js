@@ -58,6 +58,7 @@
         this.$el.find('.chardinjs-helper-layer').remove();
         this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
         this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
+        $(element).parents().removeClass("chardinjs-parent-toggle-fix");
         if (window.removeEventListener) {
           window.removeEventListener("keydown", this._onKeyDown, true);
         } else {
@@ -178,6 +179,7 @@
         helper_layer.appendChild(tooltip_layer);
         this._place_tooltip(element);
         element.className += " chardinjs-show-element";
+        $(element).parents().addClass("chardinjs-parent-toggle-fix");
         current_element_position = "";
         if (element.currentStyle) {
           current_element_position = element.currentStyle["position"];
