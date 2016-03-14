@@ -80,3 +80,6 @@
 
 .chardinjs-relative-position {
   position: relative; }
+
+.chardinjs-parent-toggle-fix {
+  z-index: inherit !important; }

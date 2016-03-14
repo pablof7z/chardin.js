@@ -31,6 +31,7 @@ do ($ = window.jQuery, window) ->
 
       @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
       @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
+      $(element).parents().removeClass("chardinjs-parent-toggle-fix")
 
       if window.removeEventListener
         window.removeEventListener "keydown", @_onKeyDown, true
@@ -137,6 +138,7 @@ do ($ = window.jQuery, window) ->
       @._place_tooltip element
 
       element.className += " chardinjs-show-element"
+      $(element).parents().addClass("chardinjs-parent-toggle-fix");
 
       current_element_position = ""
       if element.currentStyle #IE
