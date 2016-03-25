@@ -8,7 +8,6 @@ do ($ = window.jQuery, window) ->
     start: (args...) ->
       return false if @._overlay_visible()
       @$el.data("chardinjs-brightness", args[0])
-      # @$el.data("chardinjs-fix-parents", args[1] ? true)
 
       @._add_overlay_layer()
       @._show_element(el) for el in @$el.find('*[data-intro]:visible')
@@ -32,8 +31,6 @@ do ($ = window.jQuery, window) ->
 
       @$el.find('.chardinjs-helper-layer').remove()
 
-      # @$el.find('.chardinjs-show-element').parents().removeClass("chardinjs-parent-toggle-fix")
-      # @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
       @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
 
       if window.removeEventListener
@@ -164,9 +161,6 @@ do ($ = window.jQuery, window) ->
 
 
       @._place_tooltip element, tooltip_layer
-
-      # element.className += " chardinjs-show-element"
-      # $(element).parents().not("[data-intro]").addClass("chardinjs-parent-toggle-fix") if @$el.data("chardinjs-fix-parents")
 
       current_element_position = ""
       if element.currentStyle #IE
