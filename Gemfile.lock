@@ -16,9 +16,13 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   coffee-script
   rake
   sass
   uglifier
+
+BUNDLED WITH
+   1.11.2

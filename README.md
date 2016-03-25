@@ -19,7 +19,7 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
-### Installing in the rails asset pipeline (optional) 
+### Installing in the rails asset pipeline (optional)
 
 There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
 
@@ -35,10 +35,16 @@ If you choose to fork the repo you can build the assets running
 Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+#### Optional Parameters:
+`data-documentation-text`: _Optional text_ for the suffix link, defaults to _'more...'_  
+`data-documentation-link`: _Optional link_ address, defaults to _'#'_  
+`data-open-documentation-active-window`: _Optional attribute,_ if specified opens the link in current tab/window.  
+`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element, defaults to _'bottom'_  
 
 ```HTML
-<img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
+<img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things."
+  data-position="right" data-documentation-link="http://en.wikipedia.org/wiki/Jean-Baptiste-Siméon_Chardin"
+  data-documentation-text="Read more?"/>
 ```
 
 ## Running
@@ -92,6 +98,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
+ * [pegasuspect](https://github.com/pegasuspect)
 
 ## Contributions
 
@@ -124,4 +131,3 @@ limitations under the License.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/heelhook/chardin.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

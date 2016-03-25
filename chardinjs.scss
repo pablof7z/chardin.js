@@ -6,6 +6,12 @@
           transition: $property;
 }
 
+@mixin borderBoxFix($property){
+  -webkit-box-sizing: $property; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: $property;    /* Firefox, other Gecko */
+  box-sizing: $property;         /* Opera/IE 8+ */
+}
+
 .chardinjs-overlay {
   position: absolute;
   z-index: 999999;
@@ -20,10 +26,10 @@
   color: white;
   @include transition(all 0.3s ease-out);
 
-  &.chardinjs-left { border-left: solid white 1px; margin-left: -10px; }
-  &.chardinjs-right { border-right: solid white 1px; padding-right: 10px; }
-  &.chardinjs-bottom { border-bottom: solid white 1px; padding-bottom: 10px; }
-  &.chardinjs-top { border-top: solid white 1px; padding-top: 10px; }
+  &.chardinjs-left { border-left: solid white 1px; margin-left: -10px; @include borderBoxFix(content-box); }
+  &.chardinjs-right { border-right: solid white 1px; padding-right: 10px; @include borderBoxFix(content-box); }
+  &.chardinjs-bottom { border-bottom: solid white 1px; padding-bottom: 10px; @include borderBoxFix(content-box); }
+  &.chardinjs-top { border-top: solid white 1px; padding-top: 10px; @include borderBoxFix(content-box); }
 }
 
 .chardinjs-tooltip {
@@ -31,10 +37,10 @@
   @include transition(opacity 0.1s ease-out);
   max-width: 200px;
 
-  &.chardinjs-left { margin-left: -135px; padding-right: 10px; }
-  &.chardinjs-right { margin-right: -135px; padding-left: 10px; }
-  &.chardinjs-bottom { margin-bottom: -50px; padding-top: 10px; }
-  &.chardinjs-top { margin-top: -50px; padding-bottom: 10px; }
+  &.chardinjs-left { margin-left: -135px; padding-right: 10px; @include borderBoxFix(content-box); }
+  &.chardinjs-right { margin-right: -135px; padding-left: 10px; @include borderBoxFix(content-box); }
+  &.chardinjs-bottom { margin-bottom: -50px; padding-top: 10px; @include borderBoxFix(content-box); }
+  &.chardinjs-top { margin-top: -50px; padding-bottom: 10px; @include borderBoxFix(content-box); }
 
   &.chardinjs-right:before, &.chardinjs-left:after, &.chardinjs-bottom:before, &.chardinjs-top:after {
     content: ".";
@@ -61,12 +67,11 @@
   &.chardinjs-right:before { left: -100px; }
   &.chardinjs-left:after { right: -100px; }
 }
-
+// CHECK z-index !important attributes
 .chardinjs-show-element {
   z-index: 9999999;
   opacity: 0.8;
 }
-
 .chardinjs-relative-position {
   position: relative;
 }

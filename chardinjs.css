@@ -20,16 +20,40 @@
   transition: all 0.3s ease-out; }
   .chardinjs-helper-layer.chardinjs-left {
     border-left: solid white 1px;
-    margin-left: -10px; }
+    margin-left: -10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-helper-layer.chardinjs-right {
     border-right: solid white 1px;
-    padding-right: 10px; }
+    padding-right: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-helper-layer.chardinjs-bottom {
     border-bottom: solid white 1px;
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-helper-layer.chardinjs-top {
     border-top: solid white 1px;
-    padding-top: 10px; }
+    padding-top: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
 
 .chardinjs-tooltip {
   position: absolute;
@@ -41,16 +65,40 @@
   max-width: 200px; }
   .chardinjs-tooltip.chardinjs-left {
     margin-left: -135px;
-    padding-right: 10px; }
+    padding-right: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-tooltip.chardinjs-right {
     margin-right: -135px;
-    padding-left: 10px; }
+    padding-left: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-tooltip.chardinjs-bottom {
     margin-bottom: -50px;
-    padding-top: 10px; }
+    padding-top: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-tooltip.chardinjs-top {
     margin-top: -50px;
-    padding-bottom: 10px; }
+    padding-bottom: 10px;
+    -webkit-box-sizing: content-box;
+    /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: content-box;
+    /* Firefox, other Gecko */
+    box-sizing: content-box;
+    /* Opera/IE 8+ */ }
   .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after, .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
     content: ".";
     display: inline-block;
