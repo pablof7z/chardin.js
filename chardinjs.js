@@ -5,7 +5,9 @@
   (function($, window) {
     var chardinJs;
     chardinJs = (function() {
-      function chardinJs(el) {
+      function chardinJs() {
+        var args, el;
+        el = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
         this.$el = $(el);
         $(window).resize((function(_this) {
           return function() {
@@ -15,10 +17,12 @@
       }
 
       chardinJs.prototype.start = function() {
-        var el, i, len, ref;
+        var args, el, i, len, ref;
+        args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
         if (this._overlay_visible()) {
           return false;
         }
+        this.$el.data("chardinjs-brightness", args[0]);
         this._add_overlay_layer();
         ref = this.$el.find('*[data-intro]:visible');
         for (i = 0, len = ref.length; i < len; i++) {
@@ -30,9 +34,9 @@
 
       chardinJs.prototype.toggle = function() {
         if (!this._overlay_visible()) {
-          return this.start();
+          return this.start.apply(this, arguments);
         } else {
-          return this.stop();
+          return this.stop(this, arguments);
         }
       };
 
@@ -56,8 +60,6 @@
           return $(this).remove();
         });
         this.$el.find('.chardinjs-helper-layer').remove();
-        this.$el.find('.chardinjs-show-element').parents().removeClass("chardinjs-parent-toggle-fix");
-        this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
         this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
         if (window.removeEventListener) {
           window.removeEventListener("keydown", this._onKeyDown, true);
@@ -74,7 +76,7 @@
       };
 
       chardinJs.prototype._add_overlay_layer = function() {
-        var element_position, overlay_layer, styleText;
+        var element_position, getOpacityStyle, overlay_layer, styleText;
         if (this._overlay_visible()) {
           return false;
         }
@@ -92,13 +94,21 @@
           }
         }
         this.$el.get()[0].appendChild(overlay_layer);
+        overlay_layer.innerHTML = '<svg style="width:100%;height:100%;"> <defs> <mask id="chardinjs-mask" x="0" y="0" width="' + overlay_layer.offsetWidth + '" height="' + overlay_layer.offsetHeight + '" > <rect x="0" y="0" width="' + overlay_layer.offsetWidth + '" height="' + overlay_layer.offsetHeight + '" fill="white"/> </mask> </defs> <rect x="0" y="0" width="' + overlay_layer.offsetWidth + '" height="' + overlay_layer.offsetHeight + '" style="stroke: none; fill: black; mask: url(#chardinjs-mask)"/> </svg>';
         overlay_layer.onclick = (function(_this) {
           return function() {
             return _this.stop();
           };
         })(this);
+        getOpacityStyle = (function(_this) {
+          return function() {
+            var ref, value;
+            value = (ref = _this.$el.data("chardinjs-brightness")) != null ? ref : 0.8;
+            return "opacity:" + value + ";background:none;";
+          };
+        })(this);
         return setTimeout(function() {
-          styleText += "opacity: .8;opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);";
+          styleText += getOpacityStyle();
           return overlay_layer.setAttribute("style", styleText);
         }, 10);
       };
@@ -107,51 +117,58 @@
         return element.getAttribute('data-position') || 'bottom';
       };
 
-      chardinJs.prototype._place_tooltip = function(element) {
-        var my_height, my_width, target_element_position, target_height, target_width, tooltip_layer, tooltip_layer_position;
-        tooltip_layer = $(element).data('tooltip_layer');
+      chardinJs.prototype._getStyle = function(el, styleProp, special) {
+        if (window.getComputedStyle) {
+          return window.getComputedStyle(el, special).getPropertyValue(styleProp);
+        } else {
+          return el.currentStyle[styleProp];
+        }
+      };
+
+      chardinJs.prototype._place_tooltip = function(element, tooltip_layer) {
+        var my_height, my_width, offset, position, target_element_position, target_height, target_width, tooltipActualWidth, tooltipMaxWidth, tooltip_layer_position;
         tooltip_layer_position = this._get_offset(tooltip_layer);
         tooltip_layer.style.top = null;
         tooltip_layer.style.right = null;
         tooltip_layer.style.bottom = null;
         tooltip_layer.style.left = null;
-        switch (this._get_position(element)) {
+        position = this._get_position(element);
+        switch (position) {
           case "top":
           case "bottom":
             target_element_position = this._get_offset(element);
             target_width = target_element_position.width;
             my_width = $(tooltip_layer).width();
             tooltip_layer.style.left = ((target_width / 2) - (tooltip_layer_position.width / 2)) + "px";
-            break;
+            return tooltip_layer.style[position] = "-" + tooltip_layer_position.height + "px";
           case "left":
           case "right":
+            tooltipMaxWidth = parseFloat(this._getStyle(tooltip_layer, "max-width"));
+            tooltip_layer.style[position] = "-" + tooltipMaxWidth + "px";
             target_element_position = this._get_offset(element);
             target_height = target_element_position.height;
-            my_height = $(tooltip_layer).height();
-            tooltip_layer.style.top = ((target_height / 2) - (tooltip_layer_position.height / 2)) + "px";
-        }
-        switch (this._get_position(element)) {
-          case "left":
-            return tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px";
-          case "right":
-            return tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px";
-          case "bottom":
-            return tooltip_layer.style.bottom = "-" + tooltip_layer_position.height + "px";
-          case "top":
-            return tooltip_layer.style.top = "-" + tooltip_layer_position.height + "px";
+            my_height = parseFloat(this._getStyle(tooltip_layer, "height"));
+            tooltip_layer.style.top = ((target_height / 2) - (my_height / 2)) + "px";
+            tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"));
+            offset = 175 - (tooltipMaxWidth - tooltipActualWidth);
+            return tooltip_layer.style[position] = "-" + offset + "px";
         }
       };
 
       chardinJs.prototype._position_helper_layer = function(element) {
-        var element_position, helper_layer;
+        var element_position, height, helper_layer, width, x, y;
         helper_layer = $(element).data('helper_layer');
         element_position = this._get_offset(element);
+        x = element_position.left;
+        y = element_position.top;
+        width = element_position.width;
+        height = element_position.height;
+        document.getElementById("chardinjs-mask").innerHTML += "<rect x=\"" + x + "\" y=\"" + y + "\" width=\"" + width + "\" height=\"" + height + "\" fill=\"black\"></rect>";
         return helper_layer.setAttribute("style", "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px; left: " + element_position.left + "px;");
       };
 
       chardinJs.prototype._show_element = function(element) {
-        var current_element_position, documentationLink, documentationText, element_position, helper_layer, introHTML, isTargetBlank, tooltip_layer, tooltip_link;
-        element_position = this._get_offset(element);
+        var current_element_position, documentationLink, documentationText, helper_layer, introHTML, isTargetBlank, tooltip_layer, tooltip_link;
         helper_layer = document.createElement("div");
         tooltip_layer = document.createElement("div");
         tooltip_link = document.createElement("a");
@@ -177,9 +194,7 @@
         }
         tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + introHTML + "</div>";
         helper_layer.appendChild(tooltip_layer);
-        this._place_tooltip(element);
-        element.className += " chardinjs-show-element";
-        $(element).parents().addClass("chardinjs-parent-toggle-fix");
+        this._place_tooltip(element, tooltip_layer);
         current_element_position = "";
         if (element.currentStyle) {
           current_element_position = element.currentStyle["position"];
