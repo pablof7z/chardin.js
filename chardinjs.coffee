@@ -20,7 +20,7 @@ do ($ = window.jQuery, window) ->
 
     refresh: ()->
       if @._overlay_visible()
-        @._position_helper_layer(el) for el in @$el.find('*[data-intro]:visible')
+        @._position_helper_layer(el) for el in @$el.find('*[data-intro]')
       else
         return this
 
@@ -100,7 +100,15 @@ do ($ = window.jQuery, window) ->
     _position_helper_layer: (element) ->
       helper_layer = $(element).data('helper_layer')
       element_position = @._get_offset(element)
-      helper_layer.setAttribute "style", "width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
+      if $(element).is(':visible') and helper_layer
+        # element is VISIBLE, helper_layer EXISTS
+        helper_layer.setAttribute "style", "display: block; width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
+      if $(element).is(':visible') and !helper_layer
+        # element is INVISIBLE, helper_layer is NULL
+        @._show_element element
+      if !$(element).is(':visible') and helper_layer
+        # element is INVISIBLE, helper_layer EXISTS
+        helper_layer.setAttribute "style", "display: none; width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
 
     _show_element: (element) ->
       element_position = @._get_offset(element)
