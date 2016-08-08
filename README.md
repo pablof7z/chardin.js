@@ -56,7 +56,7 @@ change `body` to some other selector.
 $('.container').chardinJs('start')
 ```
 
-You may also refresh instructions overlay any time to reflect whatever changes happened to the underlaying page elements since the instructions overlay has been displayed.
+You may also refresh instructions overlay any time to reflect whatever changes happened to the underlying page elements since the instructions overlay has been displayed.
 
 ```Javascript
 var chardinOverlay = $('body').chardinJs('start');
