@@ -52,12 +52,18 @@
       };
 
       chardinJs.prototype.stop = function() {
+        var el, i, len, ref;
         this.$el.find(".chardinjs-overlay").fadeOut(function() {
           return $(this).remove();
         });
         this.$el.find('.chardinjs-helper-layer').remove();
         this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
         this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
+        ref = this.$el.find('*[data-intro]');
+        for (i = 0, len = ref.length; i < len; i++) {
+          el = ref[i];
+          $(el).data('helper_layer', null).data('tooltip_layer', null);
+        }
         if (window.removeEventListener) {
           window.removeEventListener("keydown", this._onKeyDown, true);
         } else {
