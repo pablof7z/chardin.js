@@ -20,7 +20,7 @@
   transition: all 0.3s ease-out; }
   .chardinjs-helper-layer.chardinjs-left {
     border-left: solid white 1px;
-    margin-left: -10px; }
+    padding-left: 10px; }
   .chardinjs-helper-layer.chardinjs-right {
     border-right: solid white 1px;
     padding-right: 10px; }
