@@ -32,10 +32,7 @@ do ($ = window.jQuery, window) ->
       @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
       @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
 
-      for el in @$el.find('*[data-intro]')
-        $(el)
-          .data('helper_layer', null)
-          .data('tooltip_layer',null)
+      $(el).data('helper_layer', null).data('tooltip_layer',null) for el in @$el.find('*[data-intro]')
 
       if window.removeEventListener
         window.removeEventListener "keydown", @_onKeyDown, true
