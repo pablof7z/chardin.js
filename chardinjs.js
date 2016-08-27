@@ -55,6 +55,14 @@
       };
 
       chardinJs.prototype.stop = function() {
+        var _elements, _i, el;
+        _elements = this.$el.find('*[data-intro]:visible');
+        for (_i = 0, _len = _elements.length; _i < _len; _i++) {
+          el = _elements[_i];
+          if ($(el).data('appendclass')) {
+            $(el).removeClass($(el).data('appendclass'));
+          }
+        }
         this.$el.find(".chardinjs-overlay").fadeOut(function() {
           return $(this).remove();
         });
@@ -164,6 +172,9 @@
           helper_layer.setAttribute("data-id", element.id);
         }
         helper_layer.className = "chardinjs-helper-layer chardinjs-" + (this._get_position(element));
+        if ($(element).data('appendclass')) {
+          $(element).addClass($(element).data('appendclass'));
+        }
         this._position_helper_layer(element);
         this.$el.get()[0].appendChild(helper_layer);
         tooltip_layer.className = "chardinjs-tooltip chardinjs-" + (this._get_position(element));
