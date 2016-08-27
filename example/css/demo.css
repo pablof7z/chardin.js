@@ -97,3 +97,7 @@ body {
 .chardinjs-helper-layer[data-id="links"] .chardinjs-tooltip:after {
   left: 10%;
 }
+
+.white-border {
+  border: 1px solid white;
+}
