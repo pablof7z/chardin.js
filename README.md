@@ -56,6 +56,14 @@ change `body` to some other selector.
 $('.container').chardinJs('start')
 ```
 
+You may also refresh instructions overlay any time to reflect whatever changes happened to the underlying page elements since the instructions overlay has been displayed.
+
+```Javascript
+var chardinOverlay = $('body').chardinJs('start');
+...
+chardinOverlay.refresh();
+```
+
 ## Methods
 
 ### .chardinJs('start')
@@ -92,6 +100,7 @@ Triggered when chardinJs is stopped.
  * [Maxim Syabro](https://github.com/syabro)
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
+ * [Max Loginov](https://github.com/maxloginov)
 
 ## Contributions
 
@@ -121,7 +130,3 @@ limitations under the License.
  [0]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.css
  [1]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.min.js
  [2]: https://github.com/heelhook
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/heelhook/chardin.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
