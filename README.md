@@ -19,7 +19,7 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
-### Installing in the rails asset pipeline (optional) 
+### Installing in the Rails asset pipeline (optional) 
 
 There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
 
@@ -35,7 +35,7 @@ If you choose to fork the repo you can build the assets running
 Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text concerning the element
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
@@ -130,3 +130,4 @@ limitations under the License.
  [0]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.css
  [1]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.min.js
  [2]: https://github.com/heelhook
+Revision history for Perl extension Proc:: InvokeEditor.
