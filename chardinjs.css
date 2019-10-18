@@ -3,11 +3,11 @@
   z-index: 999999;
   background-color: #000;
   opacity: 0;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -ms-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out; }
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  -ms-transition: all 0.4s ease-out;
+  -o-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out; }
 
 .chardinjs-helper-layer {
   position: absolute;
@@ -28,7 +28,7 @@
     border-bottom: solid white 1px;
     padding-bottom: 10px; }
   .chardinjs-helper-layer.chardinjs-top {
-    border-top: solid white 1px;
+    border-top: solid white 2px;
     padding-top: 10px; }
 
 .chardinjs-tooltip {
@@ -41,16 +41,16 @@
   max-width: 200px; }
   .chardinjs-tooltip.chardinjs-left {
     margin-left: -135px;
-    padding-right: 10px; }
+    padding-right: 12px; }
   .chardinjs-tooltip.chardinjs-right {
     margin-right: -135px;
-    padding-left: 10px; }
+    padding-left: 12px; }
   .chardinjs-tooltip.chardinjs-bottom {
     margin-bottom: -50px;
-    padding-top: 10px; }
+    padding-top: 12px; }
   .chardinjs-tooltip.chardinjs-top {
     margin-top: -50px;
-    padding-bottom: 10px; }
+    padding-bottom: 12px; }
   .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after, .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
     content: ".";
     display: inline-block;
@@ -60,11 +60,11 @@
     position: absolute; }
   .chardinjs-tooltip.chardinjs-right:before, .chardinjs-tooltip.chardinjs-left:after {
     width: 100px;
-    top: 50%; }
+    top: 51%; }
   .chardinjs-tooltip.chardinjs-bottom:before, .chardinjs-tooltip.chardinjs-top:after {
     width: 1px;
     height: 50px;
-    left: 50%; }
+    left: 51%; }
   .chardinjs-tooltip.chardinjs-bottom:before {
     top: -50px; }
   .chardinjs-tooltip.chardinjs-top:after {
@@ -76,7 +76,7 @@
 
 .chardinjs-show-element {
   z-index: 9999999;
-  opacity: 0.8; }
+  opacity: 0.9; }
 
 .chardinjs-relative-position {
   position: relative; }
