@@ -7,7 +7,7 @@
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements. It is inspired by
 the recent Gmail new composer tour which I loved.
 
-![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png "chardin")  
+![chardin](https://raw.github.com/heelhook/chardin.js/master/example/img/chardin.png 'chardin')  
 [Jean-Baptiste-Siméon Chardin](http://en.wikipedia.org/wiki/Jean-Baptiste-Sim%C3%A9on_Chardin)
 
 ## Installing
@@ -19,16 +19,15 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
-### Installing in the rails asset pipeline (optional) 
+### Installing in the rails asset pipeline (optional)
 
 There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
 
 ### Building (optional)
 
-If you choose to fork the repo you can build the assets running
+If you choose to fork this repo, you can build the assets running
 
     rake compile
-
 
 ## Adding data for the instructions
 
@@ -94,22 +93,22 @@ Triggered when chardinJs is stopped.
 
 ### Contributors
 
- * [John Weir](https://github.com/jweir)
- * [felipeclopes](https://github.com/felipeclopes)
- * [Bobby Jack](https://github.com/fiveminuteargument)
- * [Maxim Syabro](https://github.com/syabro)
- * [nmeum](https://github.com/nmeum)
- * [printercu](https://github.com/printercu)
- * [Max Loginov](https://github.com/maxloginov)
+-   [John Weir](https://github.com/jweir)
+-   [felipeclopes](https://github.com/felipeclopes)
+-   [Bobby Jack](https://github.com/fiveminuteargument)
+-   [Maxim Syabro](https://github.com/syabro)
+-   [nmeum](https://github.com/nmeum)
+-   [printercu](https://github.com/printercu)
+-   [Max Loginov](https://github.com/maxloginov)
 
 ## Contributions
 
 If you want to contribute, please:
 
-  * Fork the project.
-  * Make your feature addition or bug fix.
-  * Add yourself to the list of contributors in the README.md.
-  * Send me a pull request on Github.
+-   Fork the project.
+-   Make your feature addition or bug fix.
+-   Add yourself to the list of contributors in the README.md.
+-   Send me a pull request on Github.
 
 ## License
 
@@ -127,6 +126,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
- [0]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.css
- [1]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.min.js
- [2]: https://github.com/heelhook
+[0]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.css
+[1]: https://github.com/heelhook/chardin.js/blob/master/chardinjs.min.js
+[2]: https://github.com/heelhook
