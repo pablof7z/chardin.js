@@ -103,7 +103,7 @@
           };
         })(this);
         return setTimeout(function() {
-          styleText += "opacity: .8;opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);";
+          styleText += "opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);";
           return overlay_layer.setAttribute("style", styleText);
         }, 10);
       };
