@@ -43,7 +43,18 @@ Add the instructions to your elements:
 
 ## Running
 
-Once you have your elements ready you can show instructions running
+Once you have your elements ready, initialise the library and assign it to an anchor that the user will click to show the overlay. 
+The library will store an initialised object to the containing element's data set so you can start and stop it with whatever options you set.
+
+```Javascript
+	$('body').chardinJs();
+	$('a[data-toggle="chardinjs"]').on('click', function (e) {
+		e.preventDefault();
+		return ($('body').data('chardinJs')).toggle();
+	});
+````
+
+You can run it explicitly like so:
 
 ```Javascript
 $('body').chardinJs('start')
@@ -63,6 +74,35 @@ var chardinOverlay = $('body').chardinJs('start');
 ...
 chardinOverlay.refresh();
 ```
+
+## Options
+
+The chardinJS constructor can take several options, eg:
+
+```Javascript
+	$('body').chardinJs({ url: "/help/HelpOverlay.json" });
+```
+Options are:
+url: specifies a url that returns a json object containing text to show. This is useful to dynamically change the overlay, or to hold all your overlay text in one external file.
+The json file should contain a set of name-value pairs, the name will match the data-intro attribute if it begins with a '#'. The value contains the required text and an optional posiiton.
+For conflicts between the data attributes, and the json, the data take precedence.
+
+Example:
+
+```json
+{
+	"#summary-btns": {
+		"text": "buttons to interact with the displayed summary",
+		"position": "left"
+	},
+	"#search-btn": { 
+        "text": "expand this to filter the list of profiles" 
+    }
+}
+```
+
+This text will be shown against an element that has data-intro='#summary-btns'. If the data-intro does not start with a #, then the value will be used to display. If no entry is present, then nothing will be displayed.
+
 
 ## Methods
 
