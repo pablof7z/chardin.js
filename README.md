@@ -83,25 +83,33 @@ The chardinJS constructor can take several options, eg:
 	$('body').chardinJs({ url: "/help/HelpOverlay.json" });
 ```
 Options are:
-url: specifies a url that returns a json object containing text to show. This is useful to dynamically change the overlay, or to hold all your overlay text in one external file.
+
+ - url: specifies a url that returns a json object containing text to show. This is useful to dynamically change the overlay, or to hold all your overlay text in one external file. 
 The json file should contain a set of name-value pairs, the name will match the data-intro attribute if it begins with a '#'. The value contains the required text and an optional posiiton.
-For conflicts between the data attributes, and the json, the data take precedence.
+For conflicts between the data attributes and the json entries, the attribute takes precedence.
 
 Example:
 
 ```json
 {
-	"#summary-btns": {
-		"text": "buttons to interact with the displayed summary",
-		"position": "left"
-	},
-	"#search-btn": { 
+    "#summary-btns": {
+        "text": "buttons to interact with the displayed summary",
+        "position": "left"
+    },
+    "#search-btn": { 
         "text": "expand this to filter the list of profiles" 
     }
 }
 ```
 
-This text will be shown against an element that has data-intro='#summary-btns'. If the data-intro does not start with a #, then the value will be used to display. If no entry is present, then nothing will be displayed.
+This text will be shown against an element that has `data-intro='#summary-btns'`. If the data-intro does not start with a #, then the value will be used as the text to display. 
+If no entry is present for a given element's data reference, then nothing will be displayed.
+
+ - attribute: changes the data attribute from data-intro to data-<as specified>.
+Example:
+```Javascript
+    $('body').chardinJs({ attribute: 'data-intro' });
+```
 
 
 ## Methods
