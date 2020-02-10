@@ -120,9 +120,15 @@
         }, 10);
       };
 
-      chardinJs.prototype._get_position = function(element) {
-        return element.getAttribute('data-position') || 'bottom';
+
+      chardinJs.prototype._get_position = function (element) {
+          var helpref = element.getAttribute(this.data_attribute);
+          if (helpref[0] == '#' && this.data_helptext[helpref].position)
+            return this.data_helptext[helpref].position;
+
+          return element.getAttribute('data-position') || 'bottom';
       };
+
 
       chardinJs.prototype._get_css_attribute = function(element) {
         var css, cssClasses, i, len, value;
@@ -218,14 +224,10 @@
           helper_layer.setAttribute("data-id", element.id);
         }
 
-        var position = this._get_position(element);
-        if (helpref[0] == '#' && this.data_helptext[helpref].position)
-          position = this.data_helptext[helpref].position;
-
-        helper_layer.className = "chardinjs-helper-layer chardinjs-" + position;
+        helper_layer.className = "chardinjs-helper-layer chardinjs-" + (this._get_position(element));
         this._position_helper_layer(element);
         this.$el.get()[0].appendChild(helper_layer);
-        tooltip_layer.className = "chardinjs-tooltip chardinjs-" + position;
+          tooltip_layer.className = "chardinjs-tooltip chardinjs-" + (this._get_position(element));
 
         helper_layer.appendChild(tooltip_layer);
         this._place_tooltip(element, tooltip_layer);
