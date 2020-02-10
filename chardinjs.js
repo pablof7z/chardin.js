@@ -6,6 +6,8 @@
     var chardinJs;
     chardinJs = (function() {
       function chardinJs(el) {
+        this.data_attribute = 'data-intro';
+        this.chardinCssClasses = ["chardinjs-helper-layer", "chardinjs-show-element", "chardinjs-relative-position"];
         this.$el = $(el);
         $(window).resize((function(_this) {
           return function() {
@@ -20,7 +22,7 @@
           return false;
         }
         this._add_overlay_layer();
-        ref = this.$el.find('*[data-intro]:visible');
+        ref = this.$el.find('*[' + this.data_attribute + ']:visible');
         for (i = 0, len = ref.length; i < len; i++) {
           el = ref[i];
           this._show_element(el);
@@ -39,7 +41,7 @@
       chardinJs.prototype.refresh = function() {
         var el, i, len, ref, results;
         if (this._overlay_visible()) {
-          ref = this.$el.find('*[data-intro]');
+          ref = this.$el.find('*[' + this.data_attribute + ']:visible');
           results = [];
           for (i = 0, len = ref.length; i < len; i++) {
             el = ref[i];
@@ -52,17 +54,15 @@
       };
 
       chardinJs.prototype.stop = function() {
-        var el, i, len, ref;
+        var css, i, len, ref;
         this.$el.find(".chardinjs-overlay").fadeOut(function() {
           return $(this).remove();
         });
         this.$el.find('.chardinjs-helper-layer').remove();
-        this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
-        this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
-        ref = this.$el.find('*[data-intro]');
+        ref = this.chardinCssClasses;
         for (i = 0, len = ref.length; i < len; i++) {
-          el = ref[i];
-          $(el).data('helper_layer', null).data('tooltip_layer', null);
+          css = ref[i];
+          this._remove_classes(css);
         }
         if (window.removeEventListener) {
           window.removeEventListener("keydown", this._onKeyDown, true);
@@ -72,6 +72,14 @@
           }
         }
         return this.$el.trigger('chardinJs:stop');
+      };
+
+      chardinJs.prototype._remove_classes = function(css) {
+        return this.$el.find('.' + css).removeClass(css);
+      };
+
+      chardinJs.prototype.set_data_attribute = function(attribute) {
+        return this.data_attribute = attribute;
       };
 
       chardinJs.prototype._overlay_visible = function() {
@@ -112,38 +120,61 @@
         return element.getAttribute('data-position') || 'bottom';
       };
 
-      chardinJs.prototype._place_tooltip = function(element) {
-        var my_height, my_width, target_element_position, target_height, target_width, tooltip_layer, tooltip_layer_position;
-        tooltip_layer = $(element).data('tooltip_layer');
+      chardinJs.prototype._get_css_attribute = function(element) {
+        var css, cssClasses, i, len, value;
+        value = element.getAttribute(this.data_attribute + "-css") || '';
+        if (value && String(value).replace(/\s/g, "").length > 1) {
+          cssClasses = (value.split(" ")).filter(function(css) {
+            return css.length !== 0;
+          });
+          for (i = 0, len = cssClasses.length; i < len; i++) {
+            css = cssClasses[i];
+            this._add_css_attribute(css);
+          }
+        }
+        return value;
+      };
+
+      chardinJs.prototype._add_css_attribute = function(css) {
+        if (!$.inArray(css, this.chardinCssClasses) > -1) {
+          return this.chardinCssClasses.push(css);
+        }
+      };
+
+      chardinJs.prototype._getStyle = function(el, styleProp, special) {
+        if (window.getComputedStyle) {
+          return window.getComputedStyle(el, special).getPropertyValue(styleProp);
+        } else {
+          return el.currentStyle[styleProp];
+        }
+      };
+
+      chardinJs.prototype._place_tooltip = function(element, tooltip_layer) {
+        var my_height, offset, position, target_element_position, target_height, target_width, tooltipActualWidth, tooltipMaxWidth, tooltip_layer_position;
         tooltip_layer_position = this._get_offset(tooltip_layer);
         tooltip_layer.style.top = null;
         tooltip_layer.style.right = null;
         tooltip_layer.style.bottom = null;
         tooltip_layer.style.left = null;
-        switch (this._get_position(element)) {
+        position = this._get_position(element);
+        switch (position) {
           case "top":
           case "bottom":
             target_element_position = this._get_offset(element);
             target_width = target_element_position.width;
-            my_width = $(tooltip_layer).width();
             tooltip_layer.style.left = ((target_width / 2) - (tooltip_layer_position.width / 2)) + "px";
-            break;
+            return tooltip_layer.style[position] = "-" + tooltip_layer_position.height + "px";
           case "left":
           case "right":
+            tooltipMaxWidth = parseFloat(this._getStyle(tooltip_layer, "max-width"));
+            tooltip_layer.style[position] = "-" + tooltipMaxWidth + "px";
             target_element_position = this._get_offset(element);
             target_height = target_element_position.height;
-            my_height = $(tooltip_layer).height();
-            tooltip_layer.style.top = ((target_height / 2) - (tooltip_layer_position.height / 2)) + "px";
-        }
-        switch (this._get_position(element)) {
-          case "left":
-            return tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px";
-          case "right":
-            return tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px";
-          case "bottom":
-            return tooltip_layer.style.bottom = "-" + tooltip_layer_position.height + "px";
-          case "top":
-            return tooltip_layer.style.top = "-" + tooltip_layer_position.height + "px";
+            my_height = parseFloat(this._getStyle(tooltip_layer, "height"));
+            tooltip_layer.style.top = ((target_height / 2) - (my_height / 2)) + "px";
+            tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"));
+            offset = 175 - (tooltipMaxWidth - tooltipActualWidth);
+            return tooltip_layer.style[position] = "-" + offset + "px";
         }
       };
 
@@ -163,8 +194,7 @@
       };
 
       chardinJs.prototype._show_element = function(element) {
-        var current_element_position, element_position, helper_layer, tooltip_layer;
-        element_position = this._get_offset(element);
+        var current_element_position, helper_layer, tooltip_layer;
         helper_layer = document.createElement("div");
         tooltip_layer = document.createElement("div");
         $(element).data('helper_layer', helper_layer).data('tooltip_layer', tooltip_layer);
@@ -175,10 +205,10 @@
         this._position_helper_layer(element);
         this.$el.get()[0].appendChild(helper_layer);
         tooltip_layer.className = "chardinjs-tooltip chardinjs-" + (this._get_position(element));
-        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute('data-intro')) + "</div>";
+        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + (element.getAttribute(this.data_attribute)) + "</div>";
         helper_layer.appendChild(tooltip_layer);
-        this._place_tooltip(element);
-        element.className += " chardinjs-show-element";
+        this._place_tooltip(element, tooltip_layer);
+        element.className += " chardinjs-show-element " + this._get_css_attribute(element);
         current_element_position = "";
         if (element.currentStyle) {
           current_element_position = element.currentStyle["position"];
@@ -225,6 +255,13 @@
         }
         if (typeof option === 'string') {
           data[option].apply(data, args);
+        } else if (typeof option === 'object') {
+          if (typeof option['attribute'] === 'string') {
+            data.set_data_attribute(option['attribute']);
+          }
+          if (typeof option['method'] === 'string') {
+            data[option['method']].apply(data, args);
+          }
         }
         return data;
       }

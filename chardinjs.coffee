@@ -1,14 +1,19 @@
 do ($ = window.jQuery, window) ->
+  
   # Define the plugin class
   class chardinJs
     constructor: (el) ->
+      @.data_attribute = 'data-intro';
+      @.chardinCssClasses = ["chardinjs-helper-layer",
+                          "chardinjs-show-element",
+                          "chardinjs-relative-position"];
       @$el = $(el)
       $(window).resize => @.refresh()
 
     start: ->
       return false if @._overlay_visible()
       @._add_overlay_layer()
-      @._show_element(el) for el in @$el.find('*[data-intro]:visible')
+      @._show_element(el) for el in @$el.find('*['+@.data_attribute+']:visible')
 
       @$el.trigger 'chardinJs:start'
 
@@ -20,7 +25,7 @@ do ($ = window.jQuery, window) ->
 
     refresh: ()->
       if @._overlay_visible()
-        @._position_helper_layer(el) for el in @$el.find('*[data-intro]')
+        @._position_helper_layer(el) for el in @$el.find('*['+@.data_attribute+']:visible')
       else
         return this
 
@@ -29,8 +34,7 @@ do ($ = window.jQuery, window) ->
 
       @$el.find('.chardinjs-helper-layer').remove()
 
-      @$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element')
-      @$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position')
+      @._remove_classes css for css in @.chardinCssClasses
 
       $(el).data('helper_layer', null).data('tooltip_layer',null) for el in @$el.find('*[data-intro]')
 
@@ -40,6 +44,12 @@ do ($ = window.jQuery, window) ->
       else document.detachEvent "onkeydown", @_onKeyDown  if document.detachEvent
 
       @$el.trigger 'chardinJs:stop'
+
+    _remove_classes: (css)  -> 
+      @$el.find('.' + css).removeClass(css)
+      
+    set_data_attribute: (attribute) ->
+      @.data_attribute = attribute
 
     _overlay_visible: ->
       @$el.find('.chardinjs-overlay').length != 0
@@ -71,33 +81,47 @@ do ($ = window.jQuery, window) ->
 
     _get_position: (element) -> element.getAttribute('data-position') or 'bottom'
 
-    _place_tooltip: (element) ->
-      tooltip_layer = $(element).data('tooltip_layer')
-      tooltip_layer_position = @._get_offset(tooltip_layer)
+    _get_css_attribute: (element) ->
+        value = element.getAttribute(@.data_attribute + "-css") || '';
+        if value and String(value).replace(/\s/g, "").length > 1
+          cssClasses = (value.split " ").filter (css) -> css.length != 0
+          @._add_css_attribute css for css in cssClasses
+        value
+    
+    _add_css_attribute: (css) ->
+      if !$.inArray(css, @.chardinCssClasses) > -1
+        @.chardinCssClasses.push(css); 
+    
+    _getStyle : (el, styleProp, special) ->
+        if (window.getComputedStyle)
+          window.getComputedStyle(el, special).getPropertyValue(styleProp)
+        else
+          el.currentStyle[styleProp]
 
+    _place_tooltip: (element, tooltip_layer) ->
+      tooltip_layer_position = @._get_offset(tooltip_layer)
       #reset the old style
       tooltip_layer.style.top = null
       tooltip_layer.style.right = null
       tooltip_layer.style.bottom = null
       tooltip_layer.style.left = null
-
-      switch @._get_position(element)
+      position = @._get_position(element);
+      switch position
         when "top", "bottom"
           target_element_position  = @._get_offset(element)
           target_width             = target_element_position.width
-          my_width                 = $(tooltip_layer).width()
           tooltip_layer.style.left = "#{(target_width/2)-(tooltip_layer_position.width/2)}px"
+          tooltip_layer.style[position] = "-" + (tooltip_layer_position.height) + "px"
         when "left", "right"
+          tooltipMaxWidth = parseFloat(@._getStyle(tooltip_layer, "max-width"));
+          tooltip_layer.style[position] = "-" + tooltipMaxWidth + "px"; # The computed size is wrong before this.
           target_element_position = @._get_offset(element)
           target_height           = target_element_position.height
-          my_height               = $(tooltip_layer).height()
-          tooltip_layer.style.top = "#{(target_height/2)-(tooltip_layer_position.height/2)}px"
-
-      switch @._get_position(element)
-        when "left" then tooltip_layer.style.left = "-" + (tooltip_layer_position.width - 34) + "px"
-        when "right" then tooltip_layer.style.right = "-" + (tooltip_layer_position.width - 34) + "px"
-        when "bottom" then tooltip_layer.style.bottom = "-" + (tooltip_layer_position.height) + "px"
-        when "top" then tooltip_layer.style.top = "-" + (tooltip_layer_position.height) + "px"
+          my_height               = parseFloat(@._getStyle(tooltip_layer, "height"))
+          tooltip_layer.style.top = "#{(target_height/2)-(my_height/2)}px"
+          tooltipActualWidth = parseFloat(@._getStyle(tooltip_layer, "width"))
+          offset = 175 - (tooltipMaxWidth - tooltipActualWidth)
+          tooltip_layer.style[position] = "-" + offset + "px"
 
     _position_helper_layer: (element) ->
       helper_layer = $(element).data('helper_layer')
@@ -113,7 +137,6 @@ do ($ = window.jQuery, window) ->
         helper_layer.setAttribute "style", "display: none; width: #{element_position.width}px; height:#{element_position.height}px; top:#{element_position.top}px; left: #{element_position.left}px;"
 
     _show_element: (element) ->
-      element_position = @._get_offset(element)
       helper_layer     = document.createElement("div")
       tooltip_layer    = document.createElement("div")
 
@@ -127,12 +150,12 @@ do ($ = window.jQuery, window) ->
       @._position_helper_layer element
       @$el.get()[0].appendChild helper_layer
       tooltip_layer.className = "chardinjs-tooltip chardinjs-#{@._get_position(element)}"
-      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute('data-intro')}</div>"
+      tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>#{element.getAttribute(@.data_attribute)}</div>"
       helper_layer.appendChild tooltip_layer
 
-      @._place_tooltip element
+      @._place_tooltip element, tooltip_layer
 
-      element.className += " chardinjs-show-element"
+      element.className += " chardinjs-show-element " + @._get_css_attribute element
 
       current_element_position = ""
       if element.currentStyle #IE
@@ -167,4 +190,10 @@ do ($ = window.jQuery, window) ->
       $this.data 'chardinJs', (data = new chardinJs(this, option))
     if typeof option == 'string'
       data[option].apply(data, args)
+    else if typeof option == 'object'
+      if typeof option['attribute'] == 'string'
+        data.set_data_attribute(option['attribute'])
+      if typeof option['method'] == 'string'
+        data[option['method']].apply(data, args)
+
     data
