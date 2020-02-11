@@ -43,13 +43,13 @@ Add the instructions to your elements:
 
 ## Running
 
-Once you have your elements ready, initialise the library and assign it to an anchor that the user will click to show the overlay. 
+Once you have your elements ready, initialise the library and assign it to a button that the user will click to show the overlay. 
 The library will store an initialised object to the containing element's data set so you can start and stop it with whatever options you set.
 
 ```Javascript
 	$('body').chardinJs();
-	$('a[data-toggle="chardinjs"]').on('click', function (e) {
-		e.preventDefault();
+	$('body').on('click', 'button[data-toggle="chardinjs"]', function (e) {
+        e.preventDefault();
 		return ($('body').data('chardinJs')).toggle();
 	});
 ````
