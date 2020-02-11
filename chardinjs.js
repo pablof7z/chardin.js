@@ -133,7 +133,7 @@
                 else 
                     positionString = element.getAttribute('data-position');
 
-                return ((_ref = positionString.split(':')) != null ? _ref[0] : void 0) || positionString || 'bottom';
+                return positionString == null ? 'bottom' : (_ref = positionString.split(':')) != null ? _ref[0] : positionString;
             };
 
             chardinJs.prototype._get_offset_override = function (element) {
@@ -144,7 +144,7 @@
                 else
                     positionString = element.getAttribute('data-position');
 
-                return 1 + parseInt(((_ref = positionString.split(':')) != null ? _ref[1] : void 0) || 0, 10) / 100 || 1;
+                return (positionString == null ? 1 : 1 + parseInt(((_ref = positionString.split(':')) != null ? _ref[1] : void 0) || 0, 10) / 100);
             };
 
 
@@ -242,9 +242,9 @@
 
                 var helpref = element.getAttribute(this.data_attribute);
                 if (helpref[0] == '#') {
-                    var helptext = this.data_helptext[helpref].text;
+                    var helptext = this.data_helptext[helpref];
                     if (helptext != undefined)
-                        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + helptext + "</div>";
+                        tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + helptext.text + "</div>";
                     else
                         return;
                 }
