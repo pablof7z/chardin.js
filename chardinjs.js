@@ -102,7 +102,7 @@
                 overlay_layer = document.createElement("div");
                 styleText = "";
                 overlay_layer.className = "chardinjs-overlay";
-                if (this.$el.prop('tagName') === "BODY") {
+                if (this.$el.prop('tagName').toUpperCase() === "BODY") {
                     styleText += "top: 0;bottom: 0; left: 0;right: 0;position: fixed;";
                     overlay_layer.setAttribute("style", styleText);
                 } else {
