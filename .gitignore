@@ -2,3 +2,9 @@
 .DS_Store
 Gemfile.lock
 .vs/
+/compilerconfig.json.defaults
+/compilerconfig.json
+/Chardin.sln
+/Chardin.csproj.user
+/Chardin.csproj
+/bundleconfig.json
