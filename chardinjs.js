@@ -126,11 +126,25 @@
 
 
             chardinJs.prototype._get_position = function (element) {
+                var positionString, _ref;
                 var helpref = element.getAttribute(this.data_attribute);
                 if (helpref[0] == '#' && this.data_helptext[helpref].position)
-                    return this.data_helptext[helpref].position;
+                    positionString = this.data_helptext[helpref].position;
+                else 
+                    positionString = element.getAttribute('data-position');
 
-                return element.getAttribute('data-position') || 'bottom';
+                return ((_ref = positionString.split(':')) != null ? _ref[0] : void 0) || positionString || 'bottom';
+            };
+
+            chardinJs.prototype._get_offset_override = function (element) {
+                var positionString, _ref;
+                var helpref = element.getAttribute(this.data_attribute);
+                if (helpref[0] == '#' && this.data_helptext[helpref].position)
+                    positionString = this.data_helptext[helpref].position;
+                else
+                    positionString = element.getAttribute('data-position');
+
+                return 1 + parseInt(((_ref = positionString.split(':')) != null ? _ref[1] : void 0) || 0, 10) / 100 || 1;
             };
 
 
@@ -179,7 +193,12 @@
                     case "bottom":
                         target_element_position = this._get_offset(element);
                         target_width = target_element_position.width;
-                        tooltip_layer.style.left = ((target_width / 2) - (tooltip_layer_position.width / 2)) + "px";
+                        my_width = parseFloat(this._getStyle(tooltip_layer, "width"));
+                        //tooltip_layer.style.left = ((target_width / 2) - (tooltip_layer_position.width / 2)) + "px";
+                        tooltip_layer.style.left = "" + ((target_width / 2) * this._get_offset_override(element) - (tooltip_layer_position.width / 2)) + "px";
+                        if (my_width) {
+                            $(tooltip_layer).width(my_width);
+                        }
                         return tooltip_layer.style[position] = "-" + tooltip_layer_position.height + "px";
                     case "left":
                     case "right":
@@ -188,7 +207,11 @@
                         target_element_position = this._get_offset(element);
                         target_height = target_element_position.height;
                         my_height = parseFloat(this._getStyle(tooltip_layer, "height"));
-                        tooltip_layer.style.top = ((target_height / 2) - (my_height / 2)) + "px";
+                        if (my_height) {
+                            $(tooltip_layer).height(my_height);
+                        }
+                        //tooltip_layer.style.top = ((target_height / 2) - (my_height / 2)) + "px";
+                        tooltip_layer.style.top = "" + ((target_height / 2) * this._get_offset_override(element) - (my_height / 2)) + "px";
                         tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"));
                         offset = 175 - (tooltipMaxWidth - tooltipActualWidth);
                         return tooltip_layer.style[position] = "-" + offset + "px";

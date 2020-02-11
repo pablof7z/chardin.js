@@ -35,7 +35,9 @@ If you choose to fork the repo you can build the assets running
 Add the instructions to your elements:
 
 `data-intro`: Text to show with the instructions  
-`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element
+`data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element.
+In addition you can alter the relative position fo the tooltip text by placing a colon and a percentage value (-100 to 100) after the position text, eg "top:-50". 
+This will slide the tooltip along the length or height of the element away from the centre.
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
