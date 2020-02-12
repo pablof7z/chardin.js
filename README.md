@@ -43,6 +43,14 @@ This will slide the tooltip along the length or height of the element away from 
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
 ```
 
+You can also run Chardin in sequenced mode, where 1 element will be displayed, moving on to the next with a mouse click (or automatically after a set delay).
+Add `data-chardin-sequenced="true"` entry to the body tag. Also add `data-chardin-auto="true"` and `data-chardin-delay="100"` for automatic movement through the elements. Delay is in milliseconds.
+The default sequence is as loaded by the DOM, but this can be overridden using the tag `data-sequence` with a number.
+
+```HTML
+<body data-chardin-sequenced="true" data-chardin-auto="false" data-chardin-delay="800" >
+```
+
 ## Running
 
 Once you have your elements ready, initialise the library and assign it to a button that the user will click to show the overlay. 
@@ -151,6 +159,10 @@ Triggered when chardinJs is stopped.
  * [nmeum](https://github.com/nmeum)
  * [printercu](https://github.com/printercu)
  * [Max Loginov](https://github.com/maxloginov)
+ * [sudodoki](https://github.com/sudodoki)
+ * [Mickaël Gentil](https://github.com/yudao)
+ * [gbjbaanb](https://github.com/gbjbaanb)
+
 
 ## Contributions
 
