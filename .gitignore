@@ -1,6 +1,5 @@
 .sass-cache
 .DS_Store
-Gemfile.lock
 .vs/
 /compilerconfig.json.defaults
 /compilerconfig.json
@@ -8,3 +7,6 @@ Gemfile.lock
 /Chardin.csproj.user
 /Chardin.csproj
 /bundleconfig.json
+[Bb]in/
+[Oo]bj/
+[Ll]og/
