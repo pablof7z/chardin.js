@@ -9,6 +9,13 @@
                 this.data_attribute = 'data-intro';
                 this.chardinCssClasses = ["chardinjs-helper-layer", "chardinjs-show-element", "chardinjs-relative-position"];
                 this.$el = $(el);
+                this.sequenced = this.$el.data('chardin-sequenced') ? true : false;
+                this.sequencedItems = this._getSequencedElements();
+                this.sequenceIdx = 0;
+                this.active = false;
+                this.timeOut = null;
+                this.isAuto = this.$el.data('chardin-auto') ? true : false;
+                this.delayTime = this.$el.data('chardin-delay') || 2000;
                 $(window).resize((function (_this) {
                     return function () {
                         return _this.refresh();
@@ -22,11 +29,17 @@
                     return false;
                 }
                 this._add_overlay_layer();
-                ref = this.$el.find('*[' + this.data_attribute + ']:visible');
-                for (i = 0, len = ref.length; i < len; i++) {
-                    el = ref[i];
-                    this._show_element(el);
+                if (!this.sequenced) {
+                    ref = this.$el.find('*[' + this.data_attribute + ']:visible');
+                    for (i = 0, len = ref.length; i < len; i++) {
+                        el = ref[i];
+                        this._show_element(el);
+                    }
+                } else {
+                    this.sequenceIdx = 0;
+                    this._show_sequenced_element();
                 }
+                this.active = true;
                 return this.$el.trigger('chardinJs:start');
             };
 
@@ -58,6 +71,7 @@
                 this.$el.find(".chardinjs-overlay").fadeOut(function () {
                     return $(this).remove();
                 });
+                this.active = false;
                 this.$el.find('.chardinjs-helper-layer').remove();
                 ref = this.chardinCssClasses;
                 for (i = 0, len = ref.length; i < len; i++) {
@@ -71,6 +85,7 @@
                         document.detachEvent("onkeydown", this._onKeyDown);
                     }
                 }
+                this.sequenceIdx = 0;
                 return this.$el.trigger('chardinJs:stop');
             };
 
@@ -95,7 +110,7 @@
 
 
             chardinJs.prototype._add_overlay_layer = function () {
-                var element_position, overlay_layer, styleText;
+                var element_position, overlay_layer, styleText, _this = this;
                 if (this._overlay_visible()) {
                     return false;
                 }
@@ -113,11 +128,14 @@
                     }
                 }
                 this.$el.get()[0].appendChild(overlay_layer);
-                overlay_layer.onclick = (function (_this) {
-                    return function () {
+                overlay_layer.onclick = function(e) {
+                    if (!_this.sequenced) {
                         return _this.stop();
-                    };
-                })(this);
+                    } else {
+                        return _this._handleMouseClick(e);
+                    }
+                };
+
                 return setTimeout(function () {
                     styleText += "opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);";
                     return overlay_layer.setAttribute("style", styleText);
@@ -130,7 +148,7 @@
                 var helpref = element.getAttribute(this.data_attribute);
                 if (helpref[0] == '#' && this.data_helptext[helpref].position)
                     positionString = this.data_helptext[helpref].position;
-                else 
+                else
                     positionString = element.getAttribute('data-position');
 
                 return positionString == null ? 'bottom' : (_ref = positionString.split(':')) != null ? _ref[0] : positionString;
@@ -235,6 +253,12 @@
             };
 
 
+            chardinJs.prototype._remove_sequenced_element = function (index) {
+                $('.chardinjs-helper-layer').eq(index).empty().remove();
+                return $('.chardinjs-show-element').removeClass('chardinjs-show-element');
+            };
+
+
             chardinJs.prototype._show_element = function (element) {
                 var current_element_position, helper_layer, tooltip_layer;
                 helper_layer = document.createElement("div");
@@ -246,7 +270,7 @@
                     if (helptext != undefined)
                         tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + helptext.text + "</div>";
                     else
-                        return;
+                        return false;
                 }
                 else
                     tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + helpref + "</div>";
@@ -276,8 +300,106 @@
                 if (current_element_position !== "absolute" && current_element_position !== "relative") {
                     return element.className += " chardinjs-relative-position";
                 }
+                return true;
             };
 
+            chardinJs.prototype._show_sequenced_element = function (delayed) {
+                var _this = this;
+                if (this.sequenceIdx < 0) {
+                    this.sequenceIdx = 0;
+                }
+                if (!this.sequencedItems[this.sequenceIdx]) {
+                    return this.stop();
+                }
+                while (!this._show_element(this.sequencedItems[this.sequenceIdx])) {
+                    this.sequenceIdx++;
+                };
+
+                if (this.sequenceIdx < this.sequencedItems.length - 1) {
+                    if (this.isAuto) {
+                        return this.timeOut = setTimeout((function () {
+                            return _this.next(_this.isAuto);
+                        }), this.delayTime);
+                    }
+                } else {
+                    if (this.isAuto) {
+                        return this.timeOut = setTimeout((function () {
+                            return _this.stop();
+                        }), this.delayTime);
+                    }
+                }
+            };
+
+            chardinJs.prototype.next = function (delayed) {
+                var _this = this;
+                delayed = delayed !== false ? true : false;
+                this.sequenceIdx++;
+                if (delayed) {
+                    clearTimeout(this.timeOut);
+                    return this.timeOut = setTimeout((function () {
+                        _this._remove_sequenced_element(0);
+                        _this._show_sequenced_element(true);
+                        return _this.$el.trigger('chardinJs:next');
+                    }), this.delayTime);
+                } else {
+                    this._remove_sequenced_element(0);
+                    this._show_sequenced_element(false);
+                    return this.$el.trigger('chardinJs:next');
+                }
+            };
+
+            chardinJs.prototype.previous = function (delayed) {
+                var _this = this;
+                delayed = delayed !== false ? true : false;
+                this.sequenceIdx--;
+                if (delayed) {
+                    clearTimeout(this.timeOut);
+                    return this.timeOut = setTimeout((function () {
+                        _this._remove_sequenced_element(0);
+                        _this._show_sequenced_element(true);
+                        return _this.$el.trigger('chardinJs:previous');
+                    }), this.delayTime);
+                } else {
+                    this._remove_sequenced_element(0);
+                    this._show_sequenced_element(false);
+                    return this.$el.trigger('chardinJs:previous');
+                }
+            };
+
+            chardinJs.prototype._handleMouseClick = function (event) {
+                if (!this.active)
+                    return;
+                var size;
+                size = this._getMaxSize();
+                event = event || window.event;
+                if (event.clientX >= (size.width / 2)) {
+                    this.next(false);
+                }
+                if (event.clientX <= (size.width / 2)) {
+                    return this.previous(false);
+                }
+            };
+
+            chardinJs.prototype._getMaxSize = function () {
+                var body, height, html, width;
+                body = document.body;
+                html = document.documentElement;
+                height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                width = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth);
+                return {
+                    'width': width,
+                    'height': height
+                };
+            };
+
+            chardinJs.prototype._getSequencedElements = function () {
+                return this.$el.find('*[data-intro]').sort(function (a, b) {
+                    var left, right;
+                    left = $(a).data('sequence') || 100;
+                    right = $(b).data('sequence') || 100;
+                    return left - right;
+                });
+            };
 
             chardinJs.prototype._get_offset = function (element) {
                 var _x, _y, element_position;
