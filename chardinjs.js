@@ -372,12 +372,10 @@
                 var size;
                 size = this._getMaxSize();
                 event = event || window.event;
-                if (event.clientX >= (size.width / 2)) {
-                    this.next(false);
-                }
-                if (event.clientX <= (size.width / 2)) {
+                if (event.shiftKey) {
                     return this.previous(false);
                 }
+                return this.next(false);
             };
 
             chardinJs.prototype._getMaxSize = function () {

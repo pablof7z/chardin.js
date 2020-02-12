@@ -45,7 +45,8 @@ This will slide the tooltip along the length or height of the element away from 
 
 You can also run Chardin in sequenced mode, where 1 element will be displayed, moving on to the next with a mouse click (or automatically after a set delay).
 Add `data-chardin-sequenced="true"` entry to the body tag. Also add `data-chardin-auto="true"` and `data-chardin-delay="100"` for automatic movement through the elements. Delay is in milliseconds.
-The default sequence is as loaded by the DOM, but this can be overridden using the tag `data-sequence` with a number.
+The default sequence is as loaded by the DOM, but this can be overridden using the tag `data-sequence` with a number. 
+If no auto-traversal is set, clicking will move sequentially through the elements, clicking wiht the shift key down will move backwards through them.
 
 ```HTML
 <body data-chardin-sequenced="true" data-chardin-auto="false" data-chardin-delay="800" >
