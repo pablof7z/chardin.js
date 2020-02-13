@@ -19,34 +19,26 @@ Simple! Fork this repo or download [chardinjs.css][0] and [chardinjs.min.js][1] 
 <script src="chardinjs.min.js"></script>
 ```
 
-### Installing in the rails asset pipeline (optional) 
-
 There's a [`chardinjs-rails`](https://github.com/heelhook/chardin.js-rails) gem.
-
-### Building (optional)
-
-If you choose to fork the repo you can build the assets running
-
-    rake compile
 
 
 ## Adding data for the instructions
 
 Add the instructions to your elements:
 
-`data-intro`: Text to show with the instructions  
+`data-intro`: Text to show with the instructions/tooltip. 
 `data-position`: (`left`, `top`, `right`, `bottom`), where to place the text with respect to the element.
-In addition you can alter the relative position fo the tooltip text by placing a colon and a percentage value (-100 to 100) after the position text, eg "top:-50". 
+In addition you can alter the relative position of the tooltip text by placing a colon and a percentage value (-100 to 100) after the position text, eg "top:-50". 
 This will slide the tooltip along the length or height of the element away from the centre.
 
 ```HTML
 <img src="img/chardin.png" data-intro="An awesome 18th-century painter, who found beauty in everyday, common things." data-position="right" />
 ```
 
-You can also run Chardin in sequenced mode, where 1 element will be displayed, moving on to the next with a mouse click (or automatically after a set delay).
+You can also run Chardin in sequenced mode, where one element will be displayed at a time, moving on to the next with a mouse click (or automatically after a set delay).
 Add `data-chardin-sequenced="true"` entry to the body tag. Also add `data-chardin-auto="true"` and `data-chardin-delay="100"` for automatic movement through the elements. Delay is in milliseconds.
 The default sequence is as loaded by the DOM, but this can be overridden using the tag `data-sequence` with a number. 
-If no auto-traversal is set, clicking will move sequentially through the elements, clicking wiht the shift key down will move backwards through them.
+If no auto-traversal is set, clicking will move sequentially through the elements, clicking with the shift key down will move backwards through them.
 
 ```HTML
 <body data-chardin-sequenced="true" data-chardin-auto="false" data-chardin-delay="800" >
@@ -147,6 +139,14 @@ Triggered when chardinJs is correctly started.
 
 Triggered when chardinJs is stopped.
 
+### 'chardinJs:next'
+
+Triggered when the sequential option moves to the next element
+
+### 'chardinJs:previous'
+
+Triggered when the sequential option moves to the previous element
+
 ## Author
 
 [Pablo Fernandez][2]
@@ -163,6 +163,7 @@ Triggered when chardinJs is stopped.
  * [sudodoki](https://github.com/sudodoki)
  * [Mickaël Gentil](https://github.com/yudao)
  * [gbjbaanb](https://github.com/gbjbaanb)
+ * [dozyatom](https://github.com/dozyatom)
 
 
 ## Contributions
