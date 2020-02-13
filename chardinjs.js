@@ -391,7 +391,7 @@
             };
 
             chardinJs.prototype._getSequencedElements = function () {
-                return this.$el.find('*[data-intro]').sort(function (a, b) {
+                return this.$el.find('*[' + this.data_attribute + ']').sort(function (a, b) {
                     var left, right;
                     left = $(a).data('sequence') || 100;
                     right = $(b).data('sequence') || 100;
