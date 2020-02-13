@@ -10,7 +10,10 @@
 	position: absolute;
 	z-index: 9999990;
 	background-color: #000;
-	opacity: 0;
+	opacity: 0.8;
+	width: 100%;
+	left: 0;
+	top: 0;
 	@include transition(all 0.3s ease-out);
 }
 

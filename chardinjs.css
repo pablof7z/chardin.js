@@ -2,7 +2,10 @@
   position: absolute;
   z-index: 9999990;
   background-color: #000;
-  opacity: 0;
+  opacity: 0.8;
+  width: 100%;
+  left: 0;
+  top: 0;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
