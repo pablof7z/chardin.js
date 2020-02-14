@@ -178,6 +178,7 @@
                 rightMask.style.width = (root_pos.width - position.width - position.left - margin) + "px";
             }
 
+
             chardinJs.prototype._get_position = function (element) {
                 var positionString, _ref;
                 var helpref = element.getAttribute(this.data_attribute);
@@ -323,6 +324,7 @@
 
                 // adjust dimmed overlay to wrap around this element
                 this._position_overlay_layer(element);
+                tooltip_layer.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
                 return true;
             };
 
