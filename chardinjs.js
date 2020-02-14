@@ -111,7 +111,7 @@
 
 
             chardinJs.prototype._add_overlay_layer = function () {
-                var styleText, _this = this;
+                var _this = this;
                 if (this._overlay_visible()) {
                     return false;
                 }
@@ -143,11 +143,6 @@
                         return _this._handleMouseClick(e);
                     }
                 };
-
-                return setTimeout(function () {
-                    styleText += "opacity: .8;-ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';filter: alpha(opacity=80);";
-                    return overlay_layer.setAttribute("style", styleText);
-                }, 10);
             };
 
             chardinJs.prototype._remove_overlay_layer = function () {
@@ -289,7 +284,7 @@
 
             chardinJs.prototype._remove_sequenced_element = function (index) {
                 $('.chardinjs-helper-layer').eq(index).empty().remove();
-                return $('.chardinjs-show-element').removeClass('chardinjs-show-element');
+                return;
             };
 
 
@@ -322,9 +317,19 @@
                 helper_layer.appendChild(tooltip_layer);
                 this._place_tooltip(element, tooltip_layer);
 
+                var _this = this;
+                helper_layer.onclick = function (e) {
+                    if (!_this.sequenced) {
+                        return _this.stop();
+                    } else {
+                        return _this._handleMouseClick(e);
+                    }
+                };
+
                 // adjust dimmed overlay to wrap around this element
                 this._position_overlay_layer(element);
                 tooltip_layer.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+
                 return true;
             };
 
@@ -394,7 +399,6 @@
             chardinJs.prototype._handleMouseClick = function (event) {
                 if (!this.active)
                     return;
-                var size;
                 size = this._getMaxSize();
                 event = event || window.event;
                 if (event.shiftKey) {
