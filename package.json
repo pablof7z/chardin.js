@@ -23,6 +23,6 @@
   },
   "homepage": "http://heelhook.github.io/chardin.js/",
   "dependencies": {
-    "jquery": "^1.6.0"
+    "jquery": "^3.4.1"
   }
 }
