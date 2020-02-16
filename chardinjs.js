@@ -81,11 +81,13 @@
                     css = ref[i];
                     this._remove_classes(css);
                 }
-                if (window.removeEventListener) {
-                    window.removeEventListener("keydown", this._onKeyDown, true);
-                } else {
-                    if (document.detachEvent) {
-                        document.detachEvent("onkeydown", this._onKeyDown);
+                if (this._onKeyDown) {
+                    if (window.removeEventListener) {
+                        window.removeEventListener("keydown", this._onKeyDown, true);
+                    } else {
+                        if (document.detachEvent) {
+                            document.detachEvent("onkeydown", this._onKeyDown);
+                        }
                     }
                 }
                 this.sequenceIdx = 0;
