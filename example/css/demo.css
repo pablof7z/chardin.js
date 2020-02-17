@@ -94,6 +94,3 @@ body {
   margin: 10px;
 }
 
-.chardinjs-helper-layer[data-id="links"] .chardinjs-tooltip:after {
-  left: 10%;
-}

@@ -22,16 +22,16 @@
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out; }
   .chardinjs-helper-layer.chardinjs-left {
-    border-left: solid  1px;
-    padding-left: 10px; }
+    border-left: solid 1px;
+    margin-left: -10px; }
   .chardinjs-helper-layer.chardinjs-right {
-    border-right: solid  1px;
+    border-right: solid 1px;
     padding-right: 10px; }
   .chardinjs-helper-layer.chardinjs-bottom {
-    border-bottom: solid  1px;
+    border-bottom: solid 1px;
     padding-bottom: 10px; }
   .chardinjs-helper-layer.chardinjs-top {
-    border-top: solid  1px;
+    border-top: solid 1px;
     padding-top: 10px; }
 
 .chardinjs-tooltip {
