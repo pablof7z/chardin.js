@@ -81,13 +81,11 @@
                     css = ref[i];
                     this._remove_classes(css);
                 }
-                if (this._onKeyDown) {
-                    if (window.removeEventListener) {
-                        window.removeEventListener("keydown", this._onKeyDown, true);
-                    } else {
-                        if (document.detachEvent) {
-                            document.detachEvent("onkeydown", this._onKeyDown);
-                        }
+                if (window.removeEventListener) {
+                    window.removeEventListener("keydown", this._onKeyDown, true);
+                } else {
+                    if (document.detachEvent) {
+                        document.detachEvent("onkeydown", this._onKeyDown);
                     }
                 }
                 this.sequenceIdx = 0;
@@ -113,7 +111,7 @@
 
 
             chardinJs.prototype._add_overlay_layer = function () {
-                var _this = this;
+                var styleText = "", _this = this;
                 if (this._overlay_visible()) {
                     return false;
                 }
@@ -121,18 +119,39 @@
                 // create a div that holds 4 child sections - to mask off the rest of the page
                 overlay_layer = document.createElement("div");
                 overlay_layer.id = "chardin-mask";
-                topMask = document.createElement("div");
-                topMask.className = "chardinjs-overlay";
-                overlay_layer.appendChild(topMask);
-                bottomMask = document.createElement("div");
-                bottomMask.className = "chardinjs-overlay";
-                overlay_layer.appendChild(bottomMask);
-                leftMask = document.createElement("div");
-                leftMask.className = "chardinjs-overlay";
-                overlay_layer.appendChild(leftMask);
-                rightMask = document.createElement("div");
-                rightMask.className = "chardinjs-overlay";
-                overlay_layer.appendChild(rightMask);
+
+                if (_this.sequenced) {
+                    topMask = document.createElement("div");
+                    topMask.className = "chardinjs-overlay";
+                    overlay_layer.appendChild(topMask);
+                    bottomMask = document.createElement("div");
+                    bottomMask.className = "chardinjs-overlay";
+                    overlay_layer.appendChild(bottomMask);
+                    leftMask = document.createElement("div");
+                    leftMask.className = "chardinjs-overlay";
+                    overlay_layer.appendChild(leftMask);
+                    rightMask = document.createElement("div");
+                    rightMask.className = "chardinjs-overlay";
+                    overlay_layer.appendChild(rightMask);
+                }
+                else {
+                    element_position = this._get_offset(this.$el.get()[0]);
+                    if (element_position) {
+                        $('*').filter(function () {
+                            return $(this).css('position') == 'fixed';
+                        }).each(function () {
+                            $(this)[0].className += " chardinjs-no-fixed";
+                        });
+                        overlay_layer.className = "chardinjs-overlay";
+                        if (this.$el.prop('tagName').toUpperCase() === "BODY") {
+                            styleText += "top: 0;bottom: 0; left: 0;right: 0;position: fixed;";
+                        }
+                        else {
+                            styleText += "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px;left: " + element_position.left + "px;";
+                        }
+                        overlay_layer.setAttribute("style", styleText);
+                    }
+                }
 
                 this.$el.get()[0].appendChild(overlay_layer);
 
@@ -148,30 +167,50 @@
             };
 
             chardinJs.prototype._remove_overlay_layer = function () {
+                this.$el.find(".chardinjs-no-fixed").removeClass("chardinjs-no-fixed");
                 this.$el.find("#chardin-mask").fadeOut(function () {
                     return $(this).remove();
                 });
             }
 
             chardinJs.prototype._position_overlay_layer = function (element) {
-                var position = this._get_offset(element);
-                var margin = 0;
+                if (this.sequenced) {
+                    var position = this._get_offset(element);
+                    var margin = 0;
 
-                root_pos = this._get_offset(this.$el.get()[0]);
+                    root_pos = this._get_offset(this.$el.get()[0]);
 
-                topMask.style.height = (position.top - margin) + "px";
+                    topMask.style.height = (position.top - margin) + "px";
 
-                bottomMask.style.top = (position.height + position.top + margin) + "px";
-                bottomMask.style.height = (root_pos.height - position.height - position.top - margin) + "px";
+                    bottomMask.style.top = (position.height + position.top + margin) + "px";
+                    bottomMask.style.height = (root_pos.height - position.height - position.top - margin) + "px";
 
-                leftMask.style.width = (position.left - margin) + "px";
-                leftMask.style.top = (position.top - margin) + "px";
-                leftMask.style.height = (position.height + margin * 2) + "px";
- 
-                rightMask.style.left = (position.left + position.width + margin) + "px";
-                rightMask.style.top = (position.top - margin) + "px";
-                rightMask.style.height = (position.height + margin * 2) + "px";
-                rightMask.style.width = (root_pos.width - position.width - position.left - margin) + "px";
+                    leftMask.style.width = (position.left - margin) + "px";
+                    leftMask.style.top = (position.top - margin) + "px";
+                    leftMask.style.height = (position.height + margin * 2) + "px";
+
+                    rightMask.style.left = (position.left + position.width + margin) + "px";
+                    rightMask.style.top = (position.top - margin) + "px";
+                    rightMask.style.height = (position.height + margin * 2) + "px";
+                    rightMask.style.width = (root_pos.width - position.width - position.left - margin) + "px";
+                }
+                else {
+                    element.className += " chardinjs-show-element " + this._get_css_attribute(element);
+                    // find parent with positon: fixed and z-index...
+
+                    current_element_position = "";
+                    if (element.currentStyle) {
+                        current_element_position = element.currentStyle["position"];
+                    } else {
+                        if (document.defaultView && document.defaultView.getComputedStyle) {
+                            current_element_position = document.defaultView.getComputedStyle(element, null).getPropertyValue("position");
+                        }
+                    }
+                    current_element_position = current_element_position.toLowerCase();
+                    if (current_element_position !== "absolute" && current_element_position !== "relative") {
+                        return element.className += " chardinjs-relative-position";
+                    }
+                }
             }
 
 
@@ -262,7 +301,7 @@
                         }
                         tooltip_layer.style.top = "" + ((target_height / 2) * this._get_position_offset(element) - (my_height / 2)) + "px";
                         tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"));
-                        offset = 175 - (tooltipMaxWidth - tooltipActualWidth);
+                        offset = 185 - (tooltipMaxWidth - tooltipActualWidth);
                         return tooltip_layer.style[position] = "-" + offset + "px";
                 }
             };
@@ -330,7 +369,9 @@
 
                 // adjust dimmed overlay to wrap around this element
                 this._position_overlay_layer(element);
-                tooltip_layer.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+                if (_this.sequenced) {
+                    tooltip_layer.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+                }
 
                 return true;
             };

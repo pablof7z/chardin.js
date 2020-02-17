@@ -76,3 +76,14 @@
     left: -50px; }
   .chardinjs-tooltip.chardinjs-left:after {
     right: -50px; }
+
+.chardinjs-show-element {
+  z-index: 9999995;
+  opacity: 0.8; }
+
+.chardinjs-relative-position {
+  position: relative; }
+
+.chardinjs-no-fixed {
+  z-index: auto !important;
+  position: absolute !important; }
