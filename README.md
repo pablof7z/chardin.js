@@ -3,7 +3,8 @@
 **Simple overlay instructions for your apps.**
 
 [Check out a demo](http://heelhook.github.com/chardin.js/).
-[Or demo of sequential stepping](http://heelhook.github.com/chardin.js/sequential.html).
+
+[Or demo sequential stepping](http://heelhook.github.com/chardin.js/sequential.html).
 
 Chardin.js is a jQuery plugin that creates a simple overlay to display instructions on existent elements. It is inspired by
 the recent Gmail new composer tour which I loved.
@@ -51,11 +52,11 @@ Once you have your elements ready, initialise the library and assign it to a but
 The library will store an initialised object to the containing element's data set so you can start and stop it with whatever options you set.
 
 ```Javascript
-	$('body').chardinJs();
-	$('body').on('click', 'button[data-toggle="chardinjs"]', function (e) {
-        e.preventDefault();
-		return ($('body').data('chardinJs')).toggle();
-	});
+$('body').chardinJs();
+$('body').on('click', 'button[data-toggle="chardinjs"]', function (e) {
+    e.preventDefault();
+    return ($('body').data('chardinJs')).toggle();
+});
 ````
 
 You can run it explicitly like so:
@@ -84,7 +85,7 @@ chardinOverlay.refresh();
 The chardinJS constructor can take several options, eg:
 
 ```Javascript
-	$('body').chardinJs({ url: "/help/HelpOverlay.json" });
+$('body').chardinJs({ url: "/help/HelpOverlay.json" });
 ```
 Options are:
 
@@ -112,7 +113,7 @@ If no entry is present for a given element's data reference, then nothing will b
  - attribute: changes the data attribute from data-intro to data-<as specified>.
 Example:
 ```Javascript
-    $('body').chardinJs({ attribute: 'data-intro' });
+$('body').chardinJs({ attribute: 'data-intro' });
 ```
 
 
@@ -178,7 +179,7 @@ If you want to contribute, please:
 
 ## License
 
-Copyright 2019 Pablo Fernandez
+Copyright 2020 Pablo Fernandez
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
