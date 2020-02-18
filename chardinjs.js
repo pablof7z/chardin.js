@@ -1,7 +1,7 @@
 
 (function () {
     var slice = [].slice;
-    var overlay_layer, topMask, bottomMask, leftMask, rightMask;
+    var overlay_layer;
 
     (function ($, window) {
         var chardinJs;
@@ -120,37 +120,21 @@
                 overlay_layer = document.createElement("div");
                 overlay_layer.id = "chardin-mask";
 
-                if (_this.sequenced) {
-                    topMask = document.createElement("div");
-                    topMask.className = "chardinjs-overlay";
-                    overlay_layer.appendChild(topMask);
-                    bottomMask = document.createElement("div");
-                    bottomMask.className = "chardinjs-overlay";
-                    overlay_layer.appendChild(bottomMask);
-                    leftMask = document.createElement("div");
-                    leftMask.className = "chardinjs-overlay";
-                    overlay_layer.appendChild(leftMask);
-                    rightMask = document.createElement("div");
-                    rightMask.className = "chardinjs-overlay";
-                    overlay_layer.appendChild(rightMask);
-                }
-                else {
-                    element_position = this._get_offset(this.$el.get()[0]);
-                    if (element_position) {
-                        $('*').filter(function () {
-                            return $(this).css('position') == 'fixed';
-                        }).each(function () {
-                            $(this)[0].className += " chardinjs-no-fixed";
-                        });
-                        overlay_layer.className = "chardinjs-overlay";
-                        if (this.$el.prop('tagName').toUpperCase() === "BODY") {
-                            styleText += "top: 0;bottom: 0; left: 0;right: 0;position: fixed;";
-                        }
-                        else {
-                            styleText += "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px;left: " + element_position.left + "px;";
-                        }
-                        overlay_layer.setAttribute("style", styleText);
+                element_position = this._get_offset(this.$el.get()[0]);
+                if (element_position) {
+                    $('*').filter(function () {
+                        return $(this).css('position') == 'fixed';
+                    }).each(function () {
+                        $(this)[0].className += " chardinjs-no-fixed";
+                    });
+                    overlay_layer.className = "chardinjs-overlay";
+                    if (this.$el.prop('tagName').toUpperCase() === "BODY") {
+                        styleText += "top: 0;bottom: 0; left: 0;right: 0;position: fixed;";
                     }
+                    else {
+                        styleText += "width: " + element_position.width + "px; height:" + element_position.height + "px; top:" + element_position.top + "px;left: " + element_position.left + "px;";
+                    }
+                    overlay_layer.setAttribute("style", styleText);
                 }
 
                 this.$el.get()[0].appendChild(overlay_layer);
@@ -167,49 +151,30 @@
             };
 
             chardinJs.prototype._remove_overlay_layer = function () {
+                this.$el.find('.chardinjs-helper-layer').remove();
+                this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
+                this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
                 this.$el.find(".chardinjs-no-fixed").removeClass("chardinjs-no-fixed");
+
                 this.$el.find("#chardin-mask").fadeOut(function () {
                     return $(this).remove();
                 });
             }
 
             chardinJs.prototype._position_overlay_layer = function (element) {
-                if (this.sequenced) {
-                    var position = this._get_offset(element);
-                    var margin = 0;
+                element.className += " chardinjs-show-element " + this._get_css_attribute(element);
 
-                    root_pos = this._get_offset(this.$el.get()[0]);
-
-                    topMask.style.height = (position.top - margin) + "px";
-
-                    bottomMask.style.top = (position.height + position.top + margin) + "px";
-                    bottomMask.style.height = (root_pos.height - position.height - position.top - margin) + "px";
-
-                    leftMask.style.width = (position.left - margin) + "px";
-                    leftMask.style.top = (position.top - margin) + "px";
-                    leftMask.style.height = (position.height + margin * 2) + "px";
-
-                    rightMask.style.left = (position.left + position.width + margin) + "px";
-                    rightMask.style.top = (position.top - margin) + "px";
-                    rightMask.style.height = (position.height + margin * 2) + "px";
-                    rightMask.style.width = (root_pos.width - position.width - position.left - margin) + "px";
+                current_element_position = "";
+                if (element.currentStyle) {
+                    current_element_position = element.currentStyle["position"];
+                } else {
+                    if (document.defaultView && document.defaultView.getComputedStyle) {
+                        current_element_position = document.defaultView.getComputedStyle(element, null).getPropertyValue("position");
+                    }
                 }
-                else {
-                    element.className += " chardinjs-show-element " + this._get_css_attribute(element);
-                    // find parent with positon: fixed and z-index...
-
-                    current_element_position = "";
-                    if (element.currentStyle) {
-                        current_element_position = element.currentStyle["position"];
-                    } else {
-                        if (document.defaultView && document.defaultView.getComputedStyle) {
-                            current_element_position = document.defaultView.getComputedStyle(element, null).getPropertyValue("position");
-                        }
-                    }
-                    current_element_position = current_element_position.toLowerCase();
-                    if (current_element_position !== "absolute" && current_element_position !== "relative") {
-                        return element.className += " chardinjs-relative-position";
-                    }
+                current_element_position = current_element_position.toLowerCase();
+                if (current_element_position !== "absolute" && current_element_position !== "relative") {
+                    return element.className += " chardinjs-relative-position";
                 }
             }
 
@@ -323,8 +288,10 @@
             };
 
 
-            chardinJs.prototype._remove_sequenced_element = function (index) {
-                $('.chardinjs-helper-layer').eq(index).empty().remove();
+            chardinJs.prototype._remove_sequenced_element = function () {
+                this.$el.find('.chardinjs-helper-layer').remove();
+                this.$el.find('.chardinjs-show-element').removeClass('chardinjs-show-element');
+                this.$el.find('.chardinjs-relative-position').removeClass('chardinjs-relative-position');
                 return;
             };
 
@@ -337,7 +304,7 @@
                 var helpref = element.getAttribute(this.data_attribute);
                 if (helpref[0] == '#') {
                     var helptext = this.data_helptext[helpref];
-                    if (helptext != undefined)
+                    if (helptext)
                         tooltip_layer.innerHTML = "<div class='chardinjs-tooltiptext'>" + helptext.text + "</div>";
                     else
                         return false;
@@ -410,12 +377,12 @@
                 if (delayed) {
                     clearTimeout(this.timeOut);
                     return this.timeOut = setTimeout((function () {
-                        _this._remove_sequenced_element(0);
+                        _this._remove_sequenced_element();
                         _this._show_sequenced_element(true);
                         return _this.$el.trigger('chardinJs:next');
                     }), this.delayTime);
                 } else {
-                    this._remove_sequenced_element(0);
+                    this._remove_sequenced_element();
                     this._show_sequenced_element(false);
                     return this.$el.trigger('chardinJs:next');
                 }
@@ -428,12 +395,12 @@
                 if (delayed) {
                     clearTimeout(this.timeOut);
                     return this.timeOut = setTimeout((function () {
-                        _this._remove_sequenced_element(0);
+                        _this._remove_sequenced_element();
                         _this._show_sequenced_element(true);
                         return _this.$el.trigger('chardinJs:previous');
                     }), this.delayTime);
                 } else {
-                    this._remove_sequenced_element(0);
+                    this._remove_sequenced_element();
                     this._show_sequenced_element(false);
                     return this.$el.trigger('chardinJs:previous');
                 }
