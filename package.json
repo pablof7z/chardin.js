@@ -7,7 +7,10 @@
     "example": "example"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "node-sass -o . --output-style nested --source-map chardinjs.css.map chardinjs.scss",
+    "build:min.css": "node-sass -o . --output-style compressed --source-map chardinjs.min.css.map chardinjs.scss chardinjs.min.css",
+    "build:js": "terser -o chardinjs.min.js -m -c --comments false --source-map filename=chardinjs.min.js.map --source-map includeSources --source-map url=chardinjs.min.js.map chardinjs.js",
+    "build": "npm run build:css && npm run build:min.css && npm run build:js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,10 @@
   },
   "homepage": "http://heelhook.github.io/chardin.js/",
   "dependencies": {
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.1"
+  },
+  "devDependencies": {
+    "node-sass": "4.14.1",
+    "terser": "4.6.13"
   }
 }
