@@ -199,9 +199,19 @@
                 else
                     positionString = element.getAttribute('data-position');
 
-                return (positionString == null ? 1 : 1 + parseInt(((_ref = positionString.split(':')) != null ? _ref[1] : void 0) || 0, 10) / 100);
+                return (positionString == null ? 1 : 1 + parseInt(((_ref = positionString.split(':')) != null ? (_ref[1] || '').split(',')[0] : void 0) || 0, 10) / 100);
             };
 
+            chardinJs.prototype._get_position_distance = function (element) {
+                var positionString, _ref;
+                var helpref = element.getAttribute(this.data_attribute);
+                if (helpref[0] == '#' && this.data_helptext[helpref].position)
+                    positionString = this.data_helptext[helpref].position;
+                else
+                    positionString = element.getAttribute('data-position');
+
+                return (positionString == null ? 100 : parseInt(((_ref = positionString.split(':')) != null ? (_ref[1] || '').split(',')[1] : void 0) || 100, 10));
+            };
 
 
             chardinJs.prototype._get_css_attribute = function (element) {
@@ -236,13 +246,18 @@
 
 
             chardinJs.prototype._place_tooltip = function (element, tooltip_layer) {
-                var my_height, offset, position, target_element_position, target_height, target_width, tooltipActualWidth, tooltipMaxWidth, tooltip_layer_position;
+                var my_height, offset, distance, position, target_element_position, target_height, target_width, tooltipActualWidth, tooltipMaxWidth, tooltip_layer_position;
                 tooltip_layer_position = this._get_offset(tooltip_layer);
                 tooltip_layer.style.top = null;
                 tooltip_layer.style.right = null;
                 tooltip_layer.style.bottom = null;
                 tooltip_layer.style.left = null;
                 position = this._get_position(element);
+                distance = this._get_position_distance(element);
+                if (distance) {
+                  tooltip_layer.className += ' chardinjs-distance-' + distance;
+                  distance = (distance / 100) - 1;
+                }
                 switch (position) {
                     case "top":
                     case "bottom":
@@ -253,7 +268,7 @@
                         if (my_width) {
                             $(tooltip_layer).width(my_width);
                         }
-                        return tooltip_layer.style[position] = "-" + tooltip_layer_position.height + "px";
+                        return tooltip_layer.style[position] = "-" + (tooltip_layer_position.height + distance * 30) + "px";
                     case "left":
                     case "right":
                         tooltipMaxWidth = parseFloat(this._getStyle(tooltip_layer, "max-width"));
@@ -266,7 +281,7 @@
                         }
                         tooltip_layer.style.top = "" + ((target_height / 2) * this._get_position_offset(element) - (my_height / 2)) + "px";
                         tooltipActualWidth = parseFloat(this._getStyle(tooltip_layer, "width"));
-                        offset = 185 - (tooltipMaxWidth - tooltipActualWidth);
+                        offset = 185 - (tooltipMaxWidth - tooltipActualWidth) + distance * 30;
                         return tooltip_layer.style[position] = "-" + offset + "px";
                 }
             };
