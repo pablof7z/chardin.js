@@ -1,3 +1,16 @@
+$vertical-distance-list: (
+	"100": 30,
+	"200": 60,
+	"300": 90,
+	"400": 120,
+	"500": 150,
+	"600": 180,
+	"700": 210,
+	"800": 240,
+	"900": 270,
+	"1000": 300
+);
+
 @mixin transition($property) {
 	-webkit-transition: $property;
 	-moz-transition: $property;
@@ -85,16 +98,7 @@
 
 	&.chardinjs-bottom:before, &.chardinjs-top:after {
 		width: 1px;
-		height: 30px;
 		left: 50%;
-	}
-
-	&.chardinjs-bottom:before {
-		top: -30px;
-	}
-
-	&.chardinjs-top:after {
-		bottom: -30px;
 	}
 
 	&.chardinjs-right:before {
@@ -103,6 +107,21 @@
 
 	&.chardinjs-left:after {
 		right: -50px;
+	}
+
+	@each $percent, $offset in $vertical-distance-list {
+		&.chardinjs-bottom.chardinjs-distance-#{$percent}:before,
+		&.chardinjs-top.chardinjs-distance-#{$percent}:after {
+			height: #{$offset}px;
+		}
+
+		&.chardinjs-bottom.chardinjs-distance-#{$percent}:before {
+			top: -#{$offset}px;
+		}
+
+		&.chardinjs-top.chardinjs-distance-#{$percent}:after {
+			bottom: -#{$offset}px;
+		}
 	}
 }
 
