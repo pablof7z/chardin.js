@@ -254,10 +254,8 @@
                 tooltip_layer.style.left = null;
                 position = this._get_position(element);
                 distance = this._get_position_distance(element);
-                if (distance) {
-                  tooltip_layer.className += ' chardinjs-distance-' + distance;
-                  distance = (distance / 100) - 1;
-                }
+                tooltip_layer.className += ' chardinjs-distance-' + distance;
+                distance = (distance / 100) - 1;
                 switch (position) {
                     case "top":
                     case "bottom":
