@@ -91,7 +91,7 @@ $('body').chardinJs({ url: "/help/HelpOverlay.json" });
 Options are:
 
  - url: specifies a url that returns a json object containing text to show. This is useful to dynamically change the overlay, or to hold all your overlay text in one external file. 
-The json file should contain a set of name-value pairs, the name will match the data-intro attribute if it begins with a '#'. The value contains the required text and an optional posiiton.
+The json file should contain a set of name-value pairs, the name will match the data-intro attribute if it begins with a '#'. The value contains the required text and an optional position.
 For conflicts between the data attributes and the json entries, the attribute takes precedence.
 
 Example:
