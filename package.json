@@ -29,7 +29,7 @@
     "jquery": "^3.5.1"
   },
   "devDependencies": {
-    "node-sass": "7.0.0",
+    "node-sass": "7.0.3",
     "terser": "4.8.1"
   }
 }
